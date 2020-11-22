@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--w);
+}
+/* @font-face{
+  font-family: customFont;
+  src: url('./utils/customFonts.ttf');
+  } */
+:root {
+  --dark: #222;
+  --w: #ffff;
+  /* font-family: customFont; */
+}
+
+body {
+  background-color: var(--dark);
+}

@@ -1,0 +1,49 @@
+{
+  "name": "rustymovies",
+  "version": "1.0.0",
+  "description": "watch movies, binge series and chat with strangers",
+  "main": "index.js",
+  "scripts": {
+    "dev": " webpack-dev-server --config webpack.dev.config.js --hot",
+    "build": "webpack --config webpack.build.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kebalepile/RustyMovies.git"
+  },
+  "keywords": [
+    "\"Rusty",
+    "Movies\"",
+    "K.T Motshoana",
+    "Def luxtech"
+  ],
+  "author": "K.T Motshoana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kebalepile/RustyMovies/issues"
+  },
+  "homepage": "https://github.com/Kebalepile/RustyMovies#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "nanoid": "^3.1.18",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "svg-url-loader": "^6.0.0",
+    "webpack": "^4.44.2",
+    "webpack-pwa-manifest": "^4.3.0",
+    "workbox-webpack-plugin": "^6.0.0-rc.0"
+  }
+}
