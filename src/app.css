@@ -17,3 +17,82 @@
 body {
   background-color: var(--dark);
 }
+
+
+select {
+  background-color: var(--dark);
+}
+
+a {
+  text-decoration: none;
+}
+
+.next:hover,
+.prev:hover {
+  background-color: rgb(0, 0, 0, 0, 8);
+}
+
+*:focus {
+  outline: none;
+}
+nav > div {
+  margin-left:10px;
+}
+
+nav > input[type="search"]{
+  margin-left:10px;
+  margin-right:10px;
+
+}
+nav > a {
+  margin-top:10px;
+  margin-right:10px;
+}
+/* img {vertical-align: middle;} */
+.categories {
+  display: flex;
+  width: "800px";
+}
+/* style scrollbar */
+#sideBar {
+  overflow-y: auto;
+}
+
+/* change border color, background-color and on hover background-color */
+#sideBar > a {
+  border: 1px solid blue;
+  text-align: center;
+  padding:5px;
+}
+#sideBar > a:hover {
+  background-color: #212121;
+  padding:5px;
+}
+
+.header{
+  width:100%;
+  background-color: yellow;
+}
+
+@media only screen and (max-width:320px){
+  nav {
+    overflow-x: hidden;
+  }
+  nav > img {
+    margin-right: 0;
+    margin-top: 0;
+    width:50px;
+    height: 50px;
+  }
+  nav div {
+    margin-left:0;
+  }
+  nav > input[type="search"]{
+    margin-left:5px;
+    margin-right:5px;
+  
+  }
+  #sideBar{
+    width:80px;
+  }
+}
