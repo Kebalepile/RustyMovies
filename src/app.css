@@ -10,7 +10,12 @@
   } */
 :root {
   --dark: #222;
+  --dark2: #252525;
   --w: #ffff;
+  --w2: #e8e8e8;
+  --g1: #808080;
+  --b2: #00b7eb;
+  --o2:#ffb62e;
   /* font-family: customFont; */
 }
 
@@ -18,9 +23,13 @@ body {
   background-color: var(--dark);
 }
 
-
 select {
   background-color: var(--dark);
+}
+hr {
+  background-color: var(--w2);
+  width: 70%;
+  margin: auto;
 }
 
 a {
@@ -35,18 +44,20 @@ a {
 *:focus {
   outline: none;
 }
+nav {
+  background-color: var(--dark2);
+}
 nav > div {
-  margin-left:10px;
+  margin-left: 10px;
 }
 
-nav > input[type="search"]{
-  margin-left:10px;
-  margin-right:10px;
-
+nav > input[type="search"] {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 nav > a {
-  margin-top:10px;
-  margin-right:10px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 /* img {vertical-align: middle;} */
 .categories {
@@ -62,37 +73,66 @@ nav > a {
 #sideBar > a {
   border: 1px solid blue;
   text-align: center;
-  padding:5px;
+  padding: 5px;
 }
 #sideBar > a:hover {
   background-color: #212121;
-  padding:5px;
+  padding: 5px;
 }
 
-.header{
+#filterMS > button {
+  background-color: var(--b2);
+  border: none;
+  height: 40px;
+  width: 100px;
+  margin: 0 5px 0 5px;
+  cursor: pointer;
+}
+#filterComponent > button {
+  cursor: pointer;
+  border: none;
+  opacity: 0.8;
+  font-size: large;
+  color: var(--b2);
+  background-color: var(--o2);
+}
+
+#footerUiUx{
+  position: fixed;
+  bottom:4px;
   width:100%;
-  background-color: yellow;
+  display: grid;
+  grid-template-columns: repeat(3,auto);
+  grid-template-rows: minmax(1,70px);
 }
 
-@media only screen and (max-width:320px){
+#footerUiUx > button {
+  cursor: pointer;
+  border: none;
+  /* opacity: 0.5; */
+  font-size: x-large;
+  color: var(--b2);
+  background-color: inherit;
+}
+
+@media only screen and (max-width: 320px) {
   nav {
     overflow-x: hidden;
   }
   nav > img {
     margin-right: 0;
     margin-top: 0;
-    width:50px;
+    width: 50px;
     height: 50px;
   }
   nav div {
-    margin-left:0;
+    margin-left: 0;
   }
-  nav > input[type="search"]{
-    margin-left:5px;
-    margin-right:5px;
-  
+  nav > input[type="search"] {
+    margin-left: 5px;
+    margin-right: 5px;
   }
-  #sideBar{
-    width:80px;
+  #sideBar {
+    width: 80px;
   }
 }

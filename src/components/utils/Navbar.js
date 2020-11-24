@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import SideBar from "../utils/SideBar";
 const Navbar = () => {
@@ -8,25 +8,28 @@ const Navbar = () => {
     setSearch(e.target.value);
   };
   return (
-    <nav style={navBar}>
-      <SideBar />
-      <input type="search" value={search} onChange={Change} style={Search} />
-      <Link to="#">
-        <img href="#" atl="Logo" style={LogoCss} />
-      </Link>
-    </nav>
+    <Fragment>
+      <nav style={navBar}>
+        <SideBar />
+        <input type="search" value={search} onChange={Change} style={Search} />
+        <Link to="#">
+          <img href="#" atl="Logo" style={LogoCss} />
+        </Link>
+      </nav>
+      <hr />
+    </Fragment>
   );
 };
 
 const navBar = {
   width: "100vw",
   color: "white",
-  backgroundColor: "#252525",
   display: "flex",
   flexBase: "1",
   flexFlow: "row nowrap",
   justifyContent: "space-between",
   alignItems: "center",
+  paddingBottom: "5px",
 };
 
 const Search = {
