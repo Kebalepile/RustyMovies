@@ -15,7 +15,7 @@
   --w2: #e8e8e8;
   --g1: #808080;
   --b2: #00b7eb;
-  --o2:#ffb62e;
+  --o2: #ffb62e;
   /* font-family: customFont; */
 }
 
@@ -88,28 +88,28 @@ nav > a {
   margin: 0 5px 0 5px;
   cursor: pointer;
 }
-#filterComponent > button {
+#filterComponent > :not(section) {
   cursor: pointer;
   border: none;
-  opacity: 0.8;
   font-size: large;
   color: var(--b2);
-  background-color: var(--o2);
+  background-color:#ff7e00;
+  height: 40px;
+  margin: 10px 3px 0 3px;
 }
 
-#footerUiUx{
+#footerUiUx {
   position: fixed;
-  bottom:4px;
-  width:100%;
+  bottom: 4px;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3,auto);
-  grid-template-rows: minmax(1,70px);
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: minmax(1, 70px);
 }
 
 #footerUiUx > button {
   cursor: pointer;
   border: none;
-  /* opacity: 0.5; */
   font-size: x-large;
   color: var(--b2);
   background-color: inherit;
@@ -134,5 +134,11 @@ nav > a {
   }
   #sideBar {
     width: 80px;
+  }
+  #filterMS > button {
+    width: 60px;
+  }
+  #filterComponent {
+    width: 100%;
   }
 }
