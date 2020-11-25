@@ -41,8 +41,9 @@ const FilterMS = () => {
 };
 
 const filterC = {
+    margin:"auto",
     display: "grid",
-    gridTemplateColumns: "repeat(3,auto)",
+    gridTemplateColumns: "repeat(3,1fr)",
     gridTemplateRows: "minmax(1,70px)"
   },
   MSCss = {
@@ -50,6 +51,7 @@ const filterC = {
     justifyContent: "center",
     alignItems: "center",
     height: "60px",
+    width:"100%"
   };
 
 export default FilterMS;
