@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, Fragment } from "react";
-import TitleCase from "./TitleCase";
+import {PartialCss} from "./css/Css"
+import TitleCase from "../utils/TitleCase";
 
 
 const Footer = () => {
@@ -31,7 +32,7 @@ const Footer = () => {
       <Fragment>
         <div id="footerUiUx" >
           <button> &#10094;</button>
-          <section id="filterMS" style={C_and_MoreCss} ref={display}></section>
+          <section id="filterMS" style={PartialCss} ref={display}></section>
           <button> &#10095;</button>
         </div>
         
@@ -39,13 +40,7 @@ const Footer = () => {
     );
 }
 
-const 
-  C_and_MoreCss = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "60px",
-  };
+
 
 
 export default Footer

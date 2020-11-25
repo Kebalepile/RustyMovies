@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Navbar from "../utils/Navbar";
+import Navbar from "../navbar/Navbar";
 const AboutPage = () => {
   return (
     <Fragment>

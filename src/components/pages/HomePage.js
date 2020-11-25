@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import Navbar from "../utils/Navbar";
-import Categories from "../utils/Categories";
-import FilterMS from "../utils/FilterMS";
-import Footer from "../utils/Footer";
+import Navbar from "../navbar/Navbar";
+import Categories from "../categories/Categories";
+import FilterMS from "../filterms/FilterMS";
+import Footer from "../footer/Footer";
 const HomePage = () => {
   return (
     <Fragment>
