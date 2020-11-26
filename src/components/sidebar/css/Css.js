@@ -1,10 +1,11 @@
-export const BtnCss = {
+const BtnCss = {
 	cursor: 'pointer',
-	width: '50px',
-	height: '50px',
+	backgroundColor: "inherit",
+	height:"40px",
+	width:"40px",
+	fontSize:"25px",
 	border: 'none',
-	backgroundColor: '#00b7eb',
-	fontSize: '30px',
+
 };
 
 export const SideBarCss = {
@@ -14,7 +15,13 @@ export const SideBarCss = {
 	padding: '5px',
 };
 export const CloseBtnCss = {
-	backgroundColor: '#ce2029',
-	width: '60px',
-	fontSize: '12px',
+	...BtnCss,
+	padding:"5px",
+	backgroundColor:"gray",
+	borderRadius:"50%"
+
 };
+
+export const OpenBtnCss = {
+	...BtnCss,
+}
