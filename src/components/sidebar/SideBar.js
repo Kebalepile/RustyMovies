@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import { BtnCss, CloseBtnCss, SideBarCss } from './css/Css';
+import more from "../../svg/more.svg";
+import close from "../../svg/sleepy_eyes.svg";
+import {CloseBtnCss, OpenBtnCss, SideBarCss } from './css/Css';
 import TitleCase from '../utils/TitleCase';
 const SideBar = () => {
 	const sideBar = useRef(null),
@@ -27,14 +29,10 @@ const SideBar = () => {
 	};
 	return (
 		<div>
-			<button onClick={Open} ref={btn} style={BtnCss}>
-				☰
-			</button>
+			<img src={more} onClick={Open} ref={btn} style={OpenBtnCss}/>
 			<div id="sideBar" ref={sideBar} style={SideBarCss}>
-				<button onClick={Close} style={{ ...BtnCss, ...CloseBtnCss }}>
-					Close
-				</button>
-				<br />
+				<img src={close} onClick={Close} style={CloseBtnCss} title="close"/>
+				<br/>
 			</div>
 		</div>
 	);
