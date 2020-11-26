@@ -1,14 +1,15 @@
 export const SlideShowCss = {
 	position: 'relative',
 	margin: 'auto',
-	minWidth: '320px',
+	width: '320px'
 };
 
 export const SlideCss = {
-	width: '250px',
+	width: '300px',
 	height: '150px',
 	position: 'relative',
 	margin: 'auto',
+	cursor:"pointer"
 };
 // next and prev same styles
 const NPCss = {
