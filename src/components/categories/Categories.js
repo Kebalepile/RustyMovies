@@ -1,6 +1,83 @@
 import React, { useState, useEffect, useRef } from 'react';
 // import TitleCase from "./TitleCase";
-import { SlideShowCss, SlideCss, NumberTextCss, _TextCss, NextCss, PrevCss } from './css/Css';
+import { SlideShowCss } from './css/Css';
+
+import Category from './Category';
+import tempImg from './use_in_dev_only.jfif';
+
+// retrived an array of movies and series
+//  from context.AvailbaleToWatch
+// array consists of:
+// {
+//     genere: e.g. "action",
+//     type: movies/series,
+//     images: url,
+//     id
+// }
+
+let a = [
+	{
+		genre: 'action',
+		type: 'movie',
+		imgURLs: [tempImg],
+		imgTotal(ary) {
+			return ary.length;
+		},
+		getImg(index, ary) {
+			if (index > ary.length || index < 0) {
+				return ary[0];
+			}
+			return ary[index];
+		},
+		id: 0,
+	},
+	{
+		genre: 'comedy',
+		type: 'movie',
+		imgURLs: [tempImg],
+		imgTotal(ary) {
+			return ary.length;
+		},
+		getImg(index, ary) {
+			if (index > ary.length || index < 0) {
+				return ary[0];
+			}
+			return ary[index];
+		},
+		id: 1,
+	},
+	{
+		genre: 'horro',
+		type: 'serise',
+		imgURLs: [tempImg],
+		imgTotal(ary) {
+			return ary.length;
+		},
+		getImg(index, ary) {
+			if (index > ary.length || index < 0) {
+				return ary[0];
+			}
+			return ary[index];
+		},
+		id: 2,
+	},
+	{
+		genre: 'Drama',
+		type: 'serise',
+		imgURLs: [tempImg],
+		imgTotal(ary) {
+			return ary.length;
+		},
+		getImg(index, ary) {
+			if (index > ary.length || index < 0) {
+				return ary[0];
+			}
+			return ary[index];
+		},
+		id: 3,
+	},
+];
+
 /**
  * @description
  * displays avaliable cateorgies of moives and series.
@@ -8,22 +85,10 @@ import { SlideShowCss, SlideCss, NumberTextCss, _TextCss, NextCss, PrevCss } fro
 const Categories = () => {
 	return (
 		<section className="categories">
-			<div style={SlideShowCss}>
-				<article className="slide" style={SlideCss}>
-					<section style={NumberTextCss}>1/2</section>
-					<img
-						src="https://www.w3schools.com/howto/img_nature_wide.jpg"
-						style={{ width: '100%', height: '100%' }}
-					/>
-					<section style={_TextCss}>Caption Text</section>
-					<button className="prev" style={PrevCss}>
-						&#10094;
-					</button>
-
-					<button className="next" style={NextCss}>
-						&#10095;
-					</button>
-				</article>
+			<div style={SlideShowCss} id="slideshow">
+				{a.map((elem, index) => (
+					<Category key={index} infoObject={elem} />
+				))}
 			</div>
 		</section>
 	);
