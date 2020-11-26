@@ -1,5 +1,5 @@
 export const NavBarCss = {
-	width: '100vw',
+	width: '100%',
 	color: 'white',
 	display: 'flex',
 	flexBase: '1',
