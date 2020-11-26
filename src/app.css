@@ -1,144 +1,205 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: var(--w);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	color: var(--w);
 }
 /* @font-face{
   font-family: customFont;
   src: url('./utils/customFonts.ttf');
   } */
 :root {
-  --dark: #222;
-  --dark2: #252525;
-  --w: #ffff;
-  --w2: #e8e8e8;
-  --g1: #808080;
-  --b2: #00b7eb;
-  --o2: #ffb62e;
-  /* font-family: customFont; */
+	--dark: #222;
+	--dark2: #252525;
+	--dark3: #212121;
+	--w: #ffff;
+	--w2: #e8e8e8;
+	--g1: #808080;
+	--b2: #00b7eb;
+	--o2: #ffb62e;
+	--g2: #555;
+	--g1: gray;
+
+	/* font-family: customFont; */
 }
 
 body {
-  background-color: var(--dark);
+	background-color: var(--dark);
 }
 
+/* disables click events on all svgs */
+svg {
+	pointer-events: none;
+}
 select {
-  background-color: var(--dark);
+	background-color: var(--dark);
 }
 hr {
-  background-color: var(--w2);
-  width: 70%;
-  margin: auto;
+	background-color: var(--w2);
+	width: 70%;
+	margin: auto;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .next:hover,
 .prev:hover {
-  background-color: rgb(0, 0, 0, 0, 8);
+	background-color: rgb(0, 0, 0, 0, 8);
 }
 
 *:focus {
-  outline: none;
+	outline: none;
 }
 nav {
-  background-color: var(--dark2);
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: var(--dark2);
 }
 nav > div {
-  margin-left: 10px;
+	margin-left: 10px;
 }
 
-nav > input[type="search"] {
-  margin-left: 10px;
-  margin-right: 10px;
+nav > input[type='search'] {
+	margin-left: 10px;
+	margin-right: 10px;
 }
 nav > a {
-  margin-top: 10px;
-  margin-right: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 /* img {vertical-align: middle;} */
 .categories {
-  display: flex;
-  width: "800px";
+	display: flex;
+	width: '800px';
 }
+
 /* style scrollbar */
 #sideBar {
-  overflow-y: auto;
+	overflow-y: auto;
+	direction: rtl;
 }
 
 /* change border color, background-color and on hover background-color */
 #sideBar > a {
-  border: 1px solid blue;
-  text-align: center;
-  padding: 5px;
+	border-bottom: 1px solid var(--o2);
+	text-align: left;
+	padding: 3px;
 }
 #sideBar > a:hover {
-  background-color: #212121;
-  padding: 5px;
+	background-color: var(--g1);
 }
 
 #filterMS > button {
-  background-color: var(--b2);
-  border: none;
-  height: 40px;
-  width: 100px;
-  margin: 0 5px 0 5px;
-  cursor: pointer;
+	background-color: var(--b2);
+	border: none;
+	height: 40px;
+	width: 100px;
+	margin: 0 5px 0 5px;
+	cursor: pointer;
+}
+#chat_and_playlist > button {
+	background-color: var(--b2);
+	border: none;
+	height: 40px;
+	width: 100px;
+	margin: 0 5px 0 5px;
+	cursor: pointer;
 }
 #filterComponent > :not(section) {
-  cursor: pointer;
-  border: none;
-  font-size: large;
-  color: var(--b2);
-  background-color:#ff7e00;
-  height: 40px;
-  margin: 10px 3px 0 3px;
+	cursor: pointer;
+	border: none;
+	font-size: large;
+	color: var(--b2);
+	background-color: #ff7e00;
+	height: 40px;
+	margin: 10px 3px 0 3px;
 }
 
 #footerUiUx {
-  position: fixed;
-  bottom: 4px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: minmax(1, 70px);
+	width: 100%;
+	display: none;
 }
 
-#footerUiUx > button {
-  cursor: pointer;
-  border: none;
-  font-size: x-large;
-  color: var(--b2);
-  background-color: inherit;
+#footerUiUx > section {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
-
+#footerUiUx > section > button {
+	cursor: pointer;
+	border: none;
+	font-size: x-large;
+	color: var(--b2);
+	background-color: inherit;
+}
+footer {
+	position: fixed;
+	margin: auto;
+	bottom: 4px;
+	width: 100%;
+}
+.footerCtrl {
+	height: 35px;
+	width: 35px;
+	cursor: pointer;
+	margin: 0 0 20px 15px;
+	padding: 10px;
+	background-color: var(--b2);
+	border-radius: 50%;
+}
 @media only screen and (max-width: 320px) {
-  nav {
-    overflow-x: hidden;
-  }
-  nav > img {
-    margin-right: 0;
-    margin-top: 0;
-    width: 50px;
-    height: 50px;
-  }
-  nav div {
-    margin-left: 0;
-  }
-  nav > input[type="search"] {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-  #sideBar {
-    width: 80px;
-  }
-  #filterMS > button {
-    width: 60px;
-  }
-  #filterComponent {
-    width: 100%;
-  }
+	nav {
+		overflow-x: hidden;
+	}
+	nav > img {
+		margin-right: 0;
+		margin-top: 0;
+		width: 50px;
+		height: 50px;
+	}
+	nav div {
+		margin-left: 0;
+	}
+	nav > input[type='search'] {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	#sideBar {
+		width: 80px;
+	}
+	#filterMS > button {
+		width: 60px;
+	}
+	#chat_and_playlist > button {
+		width: 60px;
+	}
+	#filterComponent {
+		width: 100%;
+	}
+}
+
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: gainsboro;
+	border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: var(--g2);
+	border-radius: 5px;
+	border: 1 solid blue;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: var(--g1);
 }
