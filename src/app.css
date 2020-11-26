@@ -35,9 +35,10 @@ select {
 	background-color: var(--dark);
 }
 hr {
-	background-color: var(--w2);
+	border: 2px solid var(--g1);
 	width: 70%;
 	margin: auto;
+	border-radius: 50%;
 }
 
 a {
@@ -84,17 +85,18 @@ nav > a {
 
 /* change border color, background-color and on hover background-color */
 #sideBar > a {
-	border-bottom: 1px solid var(--o2);
+	border-bottom: 1px dotted var(--o2);
 	text-align: left;
 	padding: 3px;
 }
 #sideBar > a:hover {
 	background-color: var(--g1);
+	border: 1px dotted var(--o2);
 }
 
 #filterMS > button {
-	background-color: var(--b2);
-	border: none;
+	background-color: var(--dark3);
+	border: 1px dotted var(--g2);
 	height: 40px;
 	width: 100px;
 	margin: 0 5px 0 5px;

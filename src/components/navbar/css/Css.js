@@ -20,5 +20,5 @@ export const SearchCss = {
 export const LogoCss = {
 	width: '80px',
 	height: '70px',
-	backgroundColor: 'red',
+	backgroundColor: ' #555',
 };
