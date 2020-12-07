@@ -43,7 +43,7 @@ const Footer = () => {
 		console.dir(e.target.name);
 	};
 	return (
-		<footer>
+		<footer >
 			<img src={displayNav} ref={controlBtn} onClick={Open} title="chat and more..." className="footerCtrl" />
 			<div id="footerUiUx" ref={footerNavbar}>
 				<img src={compressNav} onClick={Close} className="footerCtrl" title="minimize chat and more ..." />

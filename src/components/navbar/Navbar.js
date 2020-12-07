@@ -13,11 +13,10 @@ const Navbar = () => {
 			<nav style={NavBarCss}>
 				<SideBar />
 				<input type="search" value={search} onChange={Change} style={SearchCss} />
-				<Link to="#">
+				<Link to="/">
 					<img href="#" atl="Logo" style={LogoCss} />
 				</Link>
 			</nav>
-			<hr />
 		</Fragment>
 	);
 };

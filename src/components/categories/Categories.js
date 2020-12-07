@@ -5,7 +5,7 @@ import { SlideShowCss } from './css/Css';
 import Category from './Category';
 import tempImg from './use_in_dev_only.jfif';
 
-// retrived an array of movies and series
+// retrived an array of movies and series playlists sorted by genre
 //  from context.AvailbaleToWatch
 // array consists of:
 // {
@@ -18,63 +18,45 @@ import tempImg from './use_in_dev_only.jfif';
 let a = [
 	{
 		genre: 'action',
-		type: 'movie',
-		imgURLs: [tempImg],
-		imgTotal(ary) {
+		films: [
+			{ id: Math.floor(Math.random() * 10), src: tempImg },
+			{ id: Math.floor(Math.random() * 10), src: tempImg }], // array of film objects
+		totalFims(ary) {
 			return ary.length;
 		},
-		getImg(index, ary) {
+		getFilm(index, ary) {
 			if (index > ary.length || index < 0) {
 				return ary[0];
 			}
 			return ary[index];
 		},
-		id: 0,
 	},
 	{
 		genre: 'comedy',
-		type: 'movie',
-		imgURLs: [tempImg],
-		imgTotal(ary) {
+		films: [{ id: Math.floor(Math.random() * 10), src: tempImg }],
+		totalFims(ary) {
 			return ary.length;
 		},
-		getImg(index, ary) {
+		getFilm(index, ary) {
 			if (index > ary.length || index < 0) {
 				return ary[0];
 			}
 			return ary[index];
 		},
-		id: 1,
-	},
-	{
-		genre: 'horro',
-		type: 'serise',
-		imgURLs: [tempImg],
-		imgTotal(ary) {
+	},{
+		genre: 'reality',
+		films: [
+			{ id: Math.floor(Math.random() * 10), src: tempImg },
+			{ id: Math.floor(Math.random() * 10), src: tempImg }], // array of film objects
+		totalFims(ary) {
 			return ary.length;
 		},
-		getImg(index, ary) {
+		getFilm(index, ary) {
 			if (index > ary.length || index < 0) {
 				return ary[0];
 			}
 			return ary[index];
 		},
-		id: 2,
-	},
-	{
-		genre: 'Drama',
-		type: 'serise',
-		imgURLs: [tempImg],
-		imgTotal(ary) {
-			return ary.length;
-		},
-		getImg(index, ary) {
-			if (index > ary.length || index < 0) {
-				return ary[0];
-			}
-			return ary[index];
-		},
-		id: 3,
 	},
 ];
 
@@ -90,6 +72,9 @@ const Categories = () => {
 					<Category key={index} infoObject={elem} />
 				))}
 			</div>
+			{/* offsetting footer css height which covers last category in 
+			categories component. */}
+			<div style={{ height: '60px' }}></div>
 		</section>
 	);
 };
