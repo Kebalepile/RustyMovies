@@ -40,6 +40,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
+        include: path.resolve(__dirname,'src'),
         exclude: /node_modules/,
         use: [
           {
