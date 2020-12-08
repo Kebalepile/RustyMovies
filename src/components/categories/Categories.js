@@ -19,8 +19,8 @@ let a = [
 	{
 		genre: 'action',
 		films: [
-			{ id: Math.floor(Math.random() * 10), src: tempImg },
-			{ id: Math.floor(Math.random() * 10), src: tempImg }], // array of film objects
+			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'american gods'  },
+			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'bobcat'  }], // array of film objects
 		totalFims(ary) {
 			return ary.length;
 		},
@@ -33,7 +33,7 @@ let a = [
 	},
 	{
 		genre: 'comedy',
-		films: [{ id: Math.floor(Math.random() * 10), src: tempImg }],
+		films: [{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'jifi cat'  }],
 		totalFims(ary) {
 			return ary.length;
 		},
@@ -46,8 +46,8 @@ let a = [
 	},{
 		genre: 'reality',
 		films: [
-			{ id: Math.floor(Math.random() * 10), src: tempImg },
-			{ id: Math.floor(Math.random() * 10), src: tempImg }], // array of film objects
+			{ id: Math.floor(Math.random() * 10), src: tempImg, name:'jifi cat' },
+			{ id: Math.floor(Math.random() * 10), src: tempImg, name:'jifi cat' }], // array of film objects
 		totalFims(ary) {
 			return ary.length;
 		},
@@ -65,6 +65,7 @@ let a = [
  * displays avaliable cateorgies of moives and series.
  */
 const Categories = () => {
+	
 	return (
 		<section className="categories">
 			<div style={SlideShowCss} id="slideshow">

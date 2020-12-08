@@ -16,7 +16,9 @@
 	--w2: #e8e8e8;
 	--g1: #808080;
 	--b2: #00b7eb;
+	--b3: #2196f3;
 	--o2: #ffb62e;
+	--o3: #ff7e00;
 	--g2: #555;
 	--g1: gray;
 
@@ -71,10 +73,9 @@ nav > a {
 	margin-top: 10px;
 	margin-right: 10px;
 }
-/* img {vertical-align: middle;} */
+
 .categories {
 	display: flex;
-	/* width: 800px; */
 	flex-flow: column nowrap;
 }
 
@@ -92,7 +93,6 @@ nav > a {
 }
 #sideBar > a:hover {
 	background-color: var(--g1);
-	border: 1px dotted var(--o2);
 }
 
 #filterMS > button {
@@ -104,19 +104,22 @@ nav > a {
 	cursor: pointer;
 }
 #chat_and_playlist > button {
-	background-color: var(--b2);
+	background-color: var(--b3);
 	border: none;
 	height: 40px;
-	width: 100px;
+	width: 80px;
 	margin: 0 5px 0 5px;
 	cursor: pointer;
+	border-radius: 2px;
+	text-shadow: 2px 0 0 var(--dark), -2px 0 0 var(--dark), 0 2px 0 var(--dark), 0 -2px 0 var(--dark),
+		1px 1px var(--dark), -1px -1px 0 var(--dark), 1px -1px 0 var(--dark), -1px 1px 0 var(--dark);
 }
 #filterComponent > :not(section) {
 	cursor: pointer;
 	border: none;
 	font-size: large;
 	color: var(--b2);
-	background-color: #ff7e00;
+	background-color: var(--o2);
 	height: 40px;
 	margin: 10px 3px 0 3px;
 }
@@ -149,8 +152,8 @@ footer {
 	width: 35px;
 	cursor: pointer;
 	margin: 0 0 20px 15px;
-	padding: 10px;
-	background-color: var(--b2);
+	padding: 6px;
+	background-color: var(--b3);
 	border-radius: 50%;
 }
 

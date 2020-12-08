@@ -8,9 +8,7 @@ export const SlideCss = {
 	width: '300px',
 	height: '200px',
 	position: 'relative',
-	margin: 'auto',
-	cursor:"pointer"
-};
+	margin: 'auto'};
 
 export const filmPicksCss = {
 	display: 'flex',

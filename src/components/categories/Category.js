@@ -3,51 +3,66 @@ import React, { useEffect, useRef } from 'react';
 import { SlideCss, filmPicksCss } from './css/Css';
 import TitleCase from '../utils/TitleCase';
 
-const Category = ({ infoObject: { genre, totalFilms, films } }) => {
+const Category = ({ infoObject: { genre, films } }) => {
 	const filmList = useRef(null);
 	useEffect(() => {
 		films.forEach((film) => {
-			let figure = document.createElement('figure');
-			figure.style.flex = '0 0 auto';
-			figure.style.margin = '10px';
-			figure.style.width = '280px';
-			figure.style.height = '150px';
+			const article = document.createElement('article');
+			article.style.flex = '0 0 auto';
+			article.style.margin = '10px';
+			article.style.width = '280px';
+			article.style.height = '150px';
 
-			let figcaption = document.createElement('figcaption');
-			figcaption.style.color= '#f2f2f2';
-			figcaption.style.fontSize= '15px';
-			figcaption.style.padding= '8px';
-			figcaption.style.position= 'absolute';
-			// figcaption.style.marginTop= '1px';
-			figcaption.style.width= '80px';
-			figcaption.style.textAlign = 'center';
-			figcaption.style.backgroundColor= '#555';
-			figcaption.textContent = TitleCase(genre);
-			
+			const title = document.createElement('b');
+			title.style.color = '#f2f2f2';
+			title.style.fontSize = '15px';
+			title.style.padding = '8px 8px 8px 0';
+			title.style.textAlign = 'center';
+			title.style.backgroundColor = 'inherit';
+			title.textContent = TitleCase(film.name);
 
-			let img = document.createElement('img');
+			const type = document.createElement('b');
+
+			type.style.fontSize = '15px';
+			type.style.padding = '8px 8px 8px 0';
+			type.style.textAlign = 'center';
+			type.textContent = TitleCase(genre);
+
+			const info = document.createElement('div');
+			info.style.display = 'flex';
+			info.style.justifyContent = 'space-between';
+			info.appendChild(title);
+			info.appendChild(type);
+
+			const img = document.createElement('img');
 			img.style.width = '100%';
 			img.style.height = '100%';
+			img.style.cursor = 'pointer';
+			img.style.borderRadius = '2px';
 			img['data-type'] = film.id;
 			img.id = film.id;
 			img.src = film.src;
 
-			figure.appendChild(img);
-			figure.appendChild(figcaption);
-			filmList.current.appendChild(figure);
+			img.addEventListener('click', (e) => {
+				const url = new URL(location.origin + '/watch');
+				url.searchParams.set('q', e.target['data-type']);
+				url.searchParams.set('genre',genre);
+				location.assign(url);
+			});
+
+			article.appendChild(img);
+			article.appendChild(info);
+			filmList.current.appendChild(article);
 		});
 	});
 	return (
 		<>
 			<article className="slide" style={SlideCss}>
-				<section id="filmpicks" style={filmPicksCss} ref={filmList}>
-				</section>
+				<section id="filmpicks" style={filmPicksCss} ref={filmList}></section>
 			</article>
 			<br />
 		</>
 	);
 };
-
-
 
 export default Category;

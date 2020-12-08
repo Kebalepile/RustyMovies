@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, Fragment } from 'react';
 import { PartialCss } from './css/Css';
-import displayNav from '../../svg/enlarge.svg';
+import displayNav from '../../svg/plus.svg';
 import compressNav from '../../svg/compress.svg';
 import TitleCase from '../utils/TitleCase';
 
