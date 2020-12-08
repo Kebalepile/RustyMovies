@@ -20,7 +20,9 @@ let a = [
 		genre: 'action',
 		films: [
 			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'american gods'  },
-			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'bobcat'  }], // array of film objects
+			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'bobcat'  },
+		{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'rick james'  }
+	], // array of film objects
 		totalFims(ary) {
 			return ary.length;
 		},

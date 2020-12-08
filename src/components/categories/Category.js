@@ -1,17 +1,21 @@
 import React, { useEffect, useRef } from 'react';
-
-import { SlideCss, filmPicksCss } from './css/Css';
+import { SlideCss, filmPicksCss, imgCss } from './css/Css';
+import left from '../../svg/left.svg';
+import right from '../../svg/right.svg';
 import TitleCase from '../utils/TitleCase';
 
 const Category = ({ infoObject: { genre, films } }) => {
 	const filmList = useRef(null);
+
 	useEffect(() => {
 		films.forEach((film) => {
 			const article = document.createElement('article');
 			article.style.flex = '0 0 auto';
 			article.style.margin = '10px';
-			article.style.width = '280px';
+			article.style.width = '230px';
 			article.style.height = '150px';
+			article.classList.add('show-cell');
+			article.setAttribute('title', film.name);
 
 			const title = document.createElement('b');
 			title.style.color = '#f2f2f2';
@@ -19,6 +23,9 @@ const Category = ({ infoObject: { genre, films } }) => {
 			title.style.padding = '8px 8px 8px 0';
 			title.style.textAlign = 'center';
 			title.style.backgroundColor = 'inherit';
+			title.style.width = '130px';
+			title.style.whiteSpace = 'nowrap';
+			title.style.overflow = 'hidden';
 			title.textContent = TitleCase(film.name);
 
 			const type = document.createElement('b');
@@ -26,6 +33,10 @@ const Category = ({ infoObject: { genre, films } }) => {
 			type.style.fontSize = '15px';
 			type.style.padding = '8px 8px 8px 0';
 			type.style.textAlign = 'center';
+			type.style.width = '100px';
+			type.style.width = '130px';
+			type.style.whiteSpace = 'nowrap';
+			type.style.overflow = 'hidden';
 			type.textContent = TitleCase(genre);
 
 			const info = document.createElement('div');
@@ -46,7 +57,7 @@ const Category = ({ infoObject: { genre, films } }) => {
 			img.addEventListener('click', (e) => {
 				const url = new URL(location.origin + '/watch');
 				url.searchParams.set('q', e.target['data-type']);
-				url.searchParams.set('genre',genre);
+				url.searchParams.set('genre', genre);
 				location.assign(url);
 			});
 
@@ -55,10 +66,15 @@ const Category = ({ infoObject: { genre, films } }) => {
 			filmList.current.appendChild(article);
 		});
 	});
+
 	return (
 		<>
 			<article className="slide" style={SlideCss}>
+				<img src={left} style={imgCss} />
+
 				<section id="filmpicks" style={filmPicksCss} ref={filmList}></section>
+
+				<img src={right} style={imgCss} />
 			</article>
 			<br />
 		</>
