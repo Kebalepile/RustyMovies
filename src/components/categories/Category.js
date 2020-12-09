@@ -3,10 +3,11 @@ import { SlideCss, filmPicksCss, imgCss } from './css/Css';
 import left from '../../svg/left.svg';
 import right from '../../svg/right.svg';
 import TitleCase from '../utils/TitleCase';
-
+import ColorGenerator from '../utils/ColorGenerator';
+import { nanoid } from 'nanoid';
 const Category = ({ infoObject: { genre, films } }) => {
 	const filmList = useRef(null);
-
+    
 	useEffect(() => {
 		films.forEach((film) => {
 			const article = document.createElement('article');
@@ -16,16 +17,19 @@ const Category = ({ infoObject: { genre, films } }) => {
 			article.style.height = '150px';
 			article.classList.add('show-cell');
 			article.setAttribute('title', film.name);
+			article.setAttribute('id', nanoid());
 
 			const title = document.createElement('b');
 			title.style.color = '#f2f2f2';
 			title.style.fontSize = '15px';
-			title.style.padding = '8px 8px 8px 0';
+			title.style.padding = '8px';
 			title.style.textAlign = 'center';
-			title.style.backgroundColor = 'inherit';
+			title.style.backgroundColor = ColorGenerator();
+			title.style.borderRadius = '2px';
 			title.style.width = '130px';
 			title.style.whiteSpace = 'nowrap';
 			title.style.overflow = 'hidden';
+			title.style.textShadow = `${'2px 0 0 #222, -2px 0 0 #222, 0 2px 0 #222, 0 -2px 0 #222'},${'1px 1px #222, -1px -1px 0 #222, 1px -1px 0 #222, -1px 1px 0 #222'}`;
 			title.textContent = TitleCase(film.name);
 
 			const type = document.createElement('b');
@@ -67,14 +71,38 @@ const Category = ({ infoObject: { genre, films } }) => {
 		});
 	});
 
+	let slideIndex = 0;
+
+	const showSlide = (n) => {
+		
+			try {
+				const slides = filmList.current.children;
+				if (n > slides.length) slideIndex = 1;
+				if (n < slides.length) slideIndex += 1;
+				let i = 0;
+				while (i < slides.length) {
+					slides[i].style.display = 'none';
+					i += 1;
+				}
+				
+				let index = ((slideIndex - 1) === -1) ? 0 :(slideIndex - 1) // handle out of range index error.
+				
+				slides[index].style.display = 'block';
+			} catch (err) {
+				console.error(err);
+			}
+		},
+		nextSlide = (n) => {
+			showSlide((slideIndex += n));
+		};
 	return (
 		<>
 			<article className="slide" style={SlideCss}>
-				<img src={left} style={imgCss} />
+				<img src={left} style={imgCss} onClick={() => nextSlide(-1)} />
 
 				<section id="filmpicks" style={filmPicksCss} ref={filmList}></section>
 
-				<img src={right} style={imgCss} />
+				<img src={right} style={imgCss} onClick={() => nextSlide(1)} />
 			</article>
 			<br />
 		</>

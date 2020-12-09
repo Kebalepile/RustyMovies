@@ -19,7 +19,7 @@ let a = [
 	{
 		genre: 'action',
 		films: [
-			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'american gods'  },
+			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'american gods sfsffsgsgsggg'  },
 			{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'bobcat'  },
 		{ id: Math.floor(Math.random() * 10), src: tempImg,  name:'rick james'  }
 	], // array of film objects
@@ -48,8 +48,8 @@ let a = [
 	},{
 		genre: 'reality',
 		films: [
-			{ id: Math.floor(Math.random() * 10), src: tempImg, name:'jifi cat' },
-			{ id: Math.floor(Math.random() * 10), src: tempImg, name:'jifi cat' }], // array of film objects
+			{ id: Math.floor(Math.random() * 10), src: tempImg, name:'mike cat' },
+			{ id: Math.floor(Math.random() * 10), src: tempImg, name:'rob cat' }], // array of film objects
 		totalFims(ary) {
 			return ary.length;
 		},
