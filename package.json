@@ -1,19 +1,30 @@
 {
   "name": "rustymovies",
   "version": "1.0.0",
-  "description": "stream movies and binge series",
+  "description": "watch movies, binge series and chat with strangers",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "write": "node list_maker.js",
+    "scrape": "node scrapper"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kebalepile/RustyMovies.git"
   },
+  "keywords": [
+    "\"Rusty",
+    "Movies\"",
+    "K.T Motshoana",
+    "Def luxtech"
+  ],
   "author": "K.T Motshoana",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Kebalepile/RustyMovies/issues"
   },
-  "homepage": "https://github.com/Kebalepile/RustyMovies#readme"
+  "homepage": "https://github.com/Kebalepile/RustyMovies#readme",
+  "dependencies": {
+    "puppeteer": "^20.9.0"
+  }
 }
