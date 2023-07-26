@@ -41,46 +41,8 @@ export default class CimaTube {
         console.log(movieLinks);
         console.log(movieLinks.length);
 
-        const mediaDetails = async (movieLink, prevUrl = this.page.url()) => {
-          await this.page.goto(movieLink.url);
-
-          if (this.page.url() !== prevUrl) {
-            const frame = await this.page.frames.find(
-              (frame) => frame.name() === "watch"
-            );
-            const dataLazySrc = await frame.$eval("iframe", (iframe) =>
-              iframe.getAttribute("data-lazy-src")
-            );
-            console.log("data src: ", dataLazySrc);
-
-            const videoElement = await frame.$("#VideoPlayer_html5_api");
-            console.log(videoElement);
-            const poster = await videoElement
-              .getProperty("poster")
-              .then((property) => property.jsonValue());
-
-            const src = await videoElement
-              .$("source")
-              .then((source) => source.getAttribute("src"));
-
-            return { poster, src, title: movieLink.title };
-          } else {
-            return mediaDetails(movieLink, prevUrl);
-          }
-        };
         if (movieLinks.length) {
-          async function processMovieLinks(movieLinks = []) {
-            if (movieLinks.length === 0) {
-              return;
-            }
-            const link = movieLinks.shift();
-            const movieDetails = await mediaDetails(link);
-            console.log(movieDetails);
-            this.movieFiles.push(movieDetails);
-            processMovieLinks(movieLinks);
-          }
-
-          processMovieLinks(movieLinks);
+          await this.#processMovieLinks(movieLinks);
           console.log(movieFiles);
           // write the files to JSON file.
           // const intervalId = setInterval(() => {
@@ -95,6 +57,43 @@ export default class CimaTube {
     } catch (err) {
       console.log(err.message);
       await this.#terminate();
+    }
+  }
+  async #processMovieLinks(movieLinks = []) {
+    if (movieLinks.length === 0) {
+      return;
+    }
+    const link = movieLinks.shift();
+    const movieDetails = await this.#mediaDetails(link);
+    console.log(movieDetails);
+    this.movieFiles.push(movieDetails);
+    processMovieLinks(movieLinks);
+  }
+  async #mediaDetails(movieLink, prevUrl = this.page.url()) {
+    await this.page.goto(movieLink.url);
+
+    if (this.page.url() !== prevUrl) {
+      const frame = await this.page.frames.find(
+        (frame) => frame.name() === "watch"
+      );
+      const dataLazySrc = await frame.$eval("iframe", (iframe) =>
+        iframe.getAttribute("data-lazy-src")
+      );
+      console.log("data src: ", dataLazySrc);
+
+      const videoElement = await frame.$("#VideoPlayer_html5_api");
+      console.log(videoElement);
+      const poster = await videoElement
+        .getProperty("poster")
+        .then((property) => property.jsonValue());
+
+      const src = await videoElement
+        .$("source")
+        .then((source) => source.getAttribute("src"));
+
+      return { poster, src, title: movieLink.title };
+    } else {
+      return await this.#mediaDetails(movieLink, prevUrl);
     }
   }
   /***
