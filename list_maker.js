@@ -1,5 +1,5 @@
 import { createInterface } from "readline";
-import { existsSync, readFileSync, unlink, writeFileSync, readdir } from "fs";
+import { unlink, writeFileSync, readdir, readFile } from "fs";
 import path from "path";
 
 const folderPath = "database/lists";
@@ -12,13 +12,18 @@ const rl = createInterface({
 
 // Prompt the user for the desired action
 rl.question(
-  "What would you like to do? (create, remove, or delete) ",
-  (action) => {
-    if (action === "create") {
+  `What would you like to do? 
+     enter 1 for create
+     enter 2 for remove
+     enter 3 for delete 
+     :
+     `,
+  (action = action.trim()) => {
+    if (action === "1") {
       createList();
-    } else if (action === "remove") {
+    } else if (action === "2") {
       removeList();
-    } else if (action === "delete") {
+    } else if (action === "3") {
       deleteLists();
     } else {
       console.log(`Invalid action: ${action}`);
@@ -33,40 +38,65 @@ function createList() {
 
   const items = [];
   // Prompt the user for the list type
-  rl.question("What type of list would you like to create? ", (listType) => {
-    console.log(`Creating a ${listType} list...`);
+  rl.question(
+    `What type of list would you like to create? 
+      enter 1 for movies
+      enter 2 for series
+      :
+  `,
+    (listType) => {
+      console.log(`Creating a ${listType} list...`);
+      listType = listType.trim();
+      if (listType === "1") {
+        listType = "movies";
+      } else if (listType === "2") {
+        listType = "series";
+      }
+      // Check if a file with the same name already exists
+      const date = new Date().toISOString().slice(0, 10);
+      const fileName = `${listType}-${date}.json`;
 
-    // Check if a file with the same name already exists
-    const date = new Date().toISOString().slice(0, 10);
-    const fileName = `${listType}-${date}.json`;
-    if (existsSync(fileName)) {
-      console.log(`Found an existing ${listType} list. Appending to it...`);
-      const data = readFileSync(fileName);
-      const existingItems = JSON.parse(data);
-      items.push(...existingItems);
-    }
-
-    // Prompt the user to add items to the list
-    function promptUser() {
-      rl.question("Enter an item (press Ctrl+C to exit): ", (item) => {
-        if (item === "done") {
-          // If the user presses Ctrl+C, exit the program
-
-          saveList(fileName, items);
-          console.log("List saved to file.");
-
-          rl.close();
-        } else {
-          // Otherwise, add the item to the array and prompt the user again
-          items.push(item);
-          promptUser();
+      readdir(folderPath, (err, files) => {
+        if (err) {
+          console.error(err);
+          return;
         }
+        files.forEach((name) => {
+          if (name === fileName) {
+            //   console.log(`Found an existing ${listType} list. Appending to it...`);
+            readFile(path.join(folderPath, name), (err, data) => {
+              if (err) throw err;
+              const existingItems = JSON.parse(data);
+              items.push(...existingItems);
+            });
+          }
+        });
       });
-    }
 
-    // Start the program by prompting the user for list items
-    promptUser();
-  });
+      // Prompt the user to add items to the list
+      function promptUser() {
+        rl.question(
+          "Enter an item (type 'done' to close program): ",
+          (item) => {
+            if (item === "done") {
+              // If the user presses Ctrl+C, exit the program
+              items.length && saveList(fileName, items);
+              console.log("program shutdown");
+
+              rl.close();
+            } else {
+              // Otherwise, add the item to the array and prompt the user again
+              items.push(item);
+              promptUser();
+            }
+          }
+        );
+      }
+
+      // Start the program by prompting the user for list items
+      promptUser();
+    }
+  );
 }
 
 // Remove a specific list by name
