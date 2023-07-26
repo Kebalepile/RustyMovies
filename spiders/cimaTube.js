@@ -7,6 +7,7 @@ export default class CimaTube {
   constructor() {
     this.browser = null;
     this.page = null;
+    this.mediaObjects = [];
   }
   /**
    * @description setup the broswer, page, default timeouts etc...
@@ -25,29 +26,60 @@ export default class CimaTube {
 
         await this.page.goto(this.#allowedDomains[1]);
 
-        const hrefs = await this.page.evaluate(() => {
+        const movieLinks = await this.page.evaluate(() => {
           const posters = document.querySelectorAll(
             ".Items--Slider--Grid .Thumb--GridItem"
           );
-          return Array.from(posters).map((poster) =>
-            poster.children[0].getAttribute("href")
-          );
+          return Array.from(posters).map((poster) => {
+            return {
+              url: poster.children[0].getAttribute("href"),
+              title: poster.children[0].getAttribute("title"),
+            };
+          });
         });
-        console.log(hrefs);
-        console.log(hrefs.length);
-        if (hrefs.length) {
-          for (const href of href) {
-            await this.page.goto(href);
+
+        console.log(movieLinks);
+        console.log(movieLinks.length);
+
+        const movieObj = async (movieLink, prevUrl = this.page.url()) => {
+          await this.page.goto(movieLink.url);
+
+          if (this.page.url() !== prevUrl) {
+            const frame = await this.page.frames.find(
+              (frame) => frame.name() === "watch"
+            );
+            const dataLazySrc = await frame.$eval("iframe", (iframe) =>
+              iframe.getAttribute("data-lazy-src")
+            );
+            console.log("data src: ", dataLazySrc);
+
+            const videoElement = await frame.$("#VideoPlayer_html5_api");
+
+            const poster = await videoElement
+              .getProperty("poster")
+              .then((property) => property.jsonValue());
+
+            const src = await videoElement
+              .$("source")
+              .then((source) => source.getAttribute("src"));
+              
+            return { poster, src, title: movieLink.title };
+          } else {
+            return movieObj(movieLink, prevUrl);
           }
+        };
+        if (movieLinks.length) {
+          // for (const href of movieLinks) {
+          //   this.mediaObjects.push(await movieObj(href));
+          // }
+          this.mediaObjects.push(await movieObj(movieLinks[0]));
+          const intervalId = setInterval(() => {
+            console.log(this.mediaObjects);
+            if (this.mediaObjects.length) {
+              clearInterval(intervalId);
+            }
+          }, 5000);
         }
-        // get video player
-        // const videoObj = await this.page.$eval("#videoPlayer", (v) => {
-        //   const video = v.children[0];
-        //   return {
-        //     poster: video.getAttrbute("poster"),
-        //     src: video.children[0].getAttribute("src"),
-        //   };
-        // });
       }
       return;
     } catch (err) {
