@@ -7,7 +7,7 @@ export default class CimaTube {
   constructor() {
     this.browser = null;
     this.page = null;
-    this.mediaObjects = [];
+    this.movieFiles = [];
   }
   /**
    * @description setup the broswer, page, default timeouts etc...
@@ -41,7 +41,7 @@ export default class CimaTube {
         console.log(movieLinks);
         console.log(movieLinks.length);
 
-        const movieObj = async (movieLink, prevUrl = this.page.url()) => {
+        const mediaDetails = async (movieLink, prevUrl = this.page.url()) => {
           await this.page.goto(movieLink.url);
 
           if (this.page.url() !== prevUrl) {
@@ -54,7 +54,7 @@ export default class CimaTube {
             console.log("data src: ", dataLazySrc);
 
             const videoElement = await frame.$("#VideoPlayer_html5_api");
-
+            console.log(videoElement);
             const poster = await videoElement
               .getProperty("poster")
               .then((property) => property.jsonValue());
@@ -62,23 +62,33 @@ export default class CimaTube {
             const src = await videoElement
               .$("source")
               .then((source) => source.getAttribute("src"));
-              
+
             return { poster, src, title: movieLink.title };
           } else {
-            return movieObj(movieLink, prevUrl);
+            return mediaDetails(movieLink, prevUrl);
           }
         };
         if (movieLinks.length) {
-          // for (const href of movieLinks) {
-          //   this.mediaObjects.push(await movieObj(href));
-          // }
-          this.mediaObjects.push(await movieObj(movieLinks[0]));
-          const intervalId = setInterval(() => {
-            console.log(this.mediaObjects);
-            if (this.mediaObjects.length) {
-              clearInterval(intervalId);
+          async function processMovieLinks(movieLinks = []) {
+            if (movieLinks.length === 0) {
+              return;
             }
-          }, 5000);
+            const link = movieLinks.shift();
+            const movieDetails = await mediaDetails(link);
+            console.log(movieDetails);
+            this.movieFiles.push(movieDetails);
+            processMovieLinks(movieLinks);
+          }
+
+          processMovieLinks(movieLinks);
+          console.log(movieFiles);
+          // write the files to JSON file.
+          // const intervalId = setInterval(() => {
+          //   console.log(this.movieFiles);
+          //   if (this.movieFiles.length) {
+          //     clearInterval(intervalId);
+          //   }
+          // }, 5000);
         }
       }
       return;
