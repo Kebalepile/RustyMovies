@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "write": "node list_maker.js",
-    "scrape": "node scrapper"
+    "crawl": "node scrapper"
   },
   "repository": {
     "type": "git",

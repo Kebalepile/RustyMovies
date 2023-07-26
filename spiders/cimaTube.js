@@ -1,32 +1,58 @@
 import puppeteer from "puppeteer";
-import settings from "./settings";
-
-
+import settings from "../settings.js";
 
 export default class CimaTube {
-    #name = "cima tube"
-  #allowedDomains = [
-    "https://mycima.tube/search/",
-    "https://mycima.tube",
-  ];
+  #name = "cima tube";
+  #allowedDomains = ["https://mycima.tube/search/", "https://mycima.tube"];
   constructor() {
     this.browser = null;
     this.page = null;
   }
-/**
- * @description setup the broswer, page, default timeouts etc...
- */
+  /**
+   * @description setup the broswer, page, default timeouts etc...
+   */
   async launch() {
+    console.log("launching: ", this.#name);
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
     this.page.setDefaultNavigationTimeout(100000);
-    await this.search()
+    await this.search();
   }
-  async search(){
-    try{
+  async search() {
+    try {
+      if (this.page) {
+        console.log("...browsing whitelist domain");
 
-    }catch(err){
-        console.log(err.message)
+        await this.page.goto(this.#allowedDomains[1]);
+
+        const hrefs = await this.page.evaluate(() => {
+          const posters = document.querySelectorAll(
+            ".Items--Slider--Grid .Thumb--GridItem"
+          );
+          return Array.from(posters).map((poster) =>
+            poster.children[0].getAttribute("href")
+          );
+        });
+        console.log(hrefs);
+        console.log(hrefs.length);
+        if (hrefs.length) {
+          for (const href of href) {
+            await this.page.goto(href);
+          }
+        }
+        // get video player
+        // const videoObj = await this.page.$eval("#videoPlayer", (v) => {
+        //   const video = v.children[0];
+        //   return {
+        //     poster: video.getAttrbute("poster"),
+        //     src: video.children[0].getAttribute("src"),
+        //   };
+        // });
+      }
+      return;
+    } catch (err) {
+      console.log(err.message);
+      await this.#terminate();
     }
   }
   /***
@@ -53,13 +79,13 @@ export default class CimaTube {
     const directoryPath = path.dirname(currentFilePath);
     return path.join(directoryPath, "..", folder, `${file}.json`);
   }
-   /***
+  /***
    * @param {string} [type=""]
    * @description Get's  the current date and time.
    * @returns date string
    *
    */
-   #date(type = "") {
+  #date(type = "") {
     try {
       const pad = (num) => num.toString().padStart(2, "0"),
         date = new Date(),
