@@ -59,6 +59,11 @@ export default class CimaTube {
       await this.#terminate();
     }
   }
+  /**
+   * @description get src and poster of each movie link object in the movielinks array
+   * @param {array} movieLinks
+   * @returns array of movie detail object
+   */
   async #processMovieLinks(movieLinks = []) {
     if (movieLinks.length === 0) {
       return;
@@ -67,8 +72,14 @@ export default class CimaTube {
     const movieDetails = await this.#mediaDetails(link);
     console.log(movieDetails);
     this.movieFiles.push(movieDetails);
-    processMovieLinks(movieLinks);
+    this.#processMovieLinks(movieLinks);
   }
+  /**
+   * @description gets src and poster of given movie link.
+   * @param {object} movieLink
+   * @param {string} prevUrl
+   * @returns movie details object
+   */
   async #mediaDetails(movieLink, prevUrl = this.page.url()) {
     await this.page.goto(movieLink.url);
 
