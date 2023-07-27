@@ -69,9 +69,9 @@ export default class CimaTube {
       return;
     }
     const link = movieLinks.shift();
-    const movieDetails = await this.#mediaDetails(link);
-    console.log(movieDetails);
-    this.movieFiles.push(movieDetails);
+    const details = await this.#mediaDetails(link);
+    console.log(details);
+    this.movieFiles.push(details);
     this.#processMovieLinks(movieLinks);
   }
   /**
@@ -84,23 +84,18 @@ export default class CimaTube {
     await this.page.goto(movieLink.url);
 
     if (this.page.url() !== prevUrl) {
-      const frame = await this.page.frames.find(
-        (frame) => frame.name() === "watch"
-      );
-      const dataLazySrc = await frame.$eval("iframe", (iframe) =>
-        iframe.getAttribute("data-lazy-src")
-      );
-      console.log("data src: ", dataLazySrc);
-
+      const frame = this.page
+        .frames()
+        .find((frame) => frame.name() === "watch");
+      
       const videoElement = await frame.$("#VideoPlayer_html5_api");
-      console.log(videoElement);
-      const poster = await videoElement
-        .getProperty("poster")
-        .then((property) => property.jsonValue());
-
-      const src = await videoElement
-        .$("source")
-        .then((source) => source.getAttribute("src"));
+      const poster = await videoElement.evaluate((videoElem) =>
+        videoElem.getAttribute("poster")
+      );
+      
+      const src = await videoElement.evaluate((videoElem) =>
+        videoElem.querySelector("source").getAttribute("src")
+      );
 
       return { poster, src, title: movieLink.title };
     } else {
