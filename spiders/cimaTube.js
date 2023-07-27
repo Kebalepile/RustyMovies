@@ -1,5 +1,8 @@
 import puppeteer from "puppeteer";
 import settings from "../settings.js";
+import { writeFile } from "fs";
+import { fileURLToPath } from "url";
+import path from "path";
 
 export default class CimaTube {
   #name = "cima tube";
@@ -9,11 +12,12 @@ export default class CimaTube {
     this.page = null;
     this.movieFiles = [];
   }
+
   /**
    * @description setup the broswer, page, default timeouts etc...
    */
   async launch() {
-    console.log("launching: ", this.#name);
+    console.log("\t Launching: ", this.#name);
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
     this.page.setDefaultNavigationTimeout(100000);
@@ -22,7 +26,7 @@ export default class CimaTube {
   async search() {
     try {
       if (this.page) {
-        console.log("...browsing whitelist domain");
+        this.#log("Browsing whitelist domain");
 
         await this.page.goto(this.#allowedDomains[1]);
 
@@ -38,24 +42,18 @@ export default class CimaTube {
           });
         });
 
-        console.log(movieLinks);
-        console.log(movieLinks.length);
+        this.#log("Movie links:");
+        this.#log(movieLinks.map(l => l.title));
 
         if (movieLinks.length) {
           await this.#processMovieLinks(movieLinks);
-          console.log(movieFiles);
-          // write the files to JSON file.
-          // const intervalId = setInterval(() => {
-          //   console.log(this.movieFiles);
-          //   if (this.movieFiles.length) {
-          //     clearInterval(intervalId);
-          //   }
-          // }, 5000);
+          this.#log(this.movieFiles);
+          this.#saveToDatabase();
         }
       }
       return;
     } catch (err) {
-      console.log(err.message);
+      this.#log(err.message);
       await this.#terminate();
     }
   }
@@ -70,9 +68,9 @@ export default class CimaTube {
     }
     const link = movieLinks.shift();
     const details = await this.#mediaDetails(link);
-    console.log(details);
+
     this.movieFiles.push(details);
-    this.#processMovieLinks(movieLinks);
+    await this.#processMovieLinks(movieLinks);
   }
   /**
    * @description gets src and poster of given movie link.
@@ -84,20 +82,24 @@ export default class CimaTube {
     await this.page.goto(movieLink.url);
 
     if (this.page.url() !== prevUrl) {
+      await this.page.waitForNetworkIdle();
       const frame = this.page
         .frames()
         .find((frame) => frame.name() === "watch");
-      
-      const videoElement = await frame.$("#VideoPlayer_html5_api");
-      const poster = await videoElement.evaluate((videoElem) =>
-        videoElem.getAttribute("poster")
-      );
-      
-      const src = await videoElement.evaluate((videoElem) =>
-        videoElem.querySelector("source").getAttribute("src")
-      );
+      if (frame) {
+        const videoElement = await frame.$("#VideoPlayer_html5_api");
+        const poster = await videoElement.evaluate((videoElem) =>
+          videoElem.getAttribute("poster")
+        );
 
-      return { poster, src, title: movieLink.title };
+        const src = await videoElement.evaluate((videoElem) =>
+          videoElem.querySelector("source").getAttribute("src")
+        );
+
+        return { poster, src, title: movieLink.title };
+      }
+
+      return await this.#mediaDetails(movieLink, prevUrl);
     } else {
       return await this.#mediaDetails(movieLink, prevUrl);
     }
@@ -114,11 +116,12 @@ export default class CimaTube {
       }
       await this.browser.close();
     } catch (err) {
-      console.log("Problem : ", err);
+      this.#log("Problem : ", err);
     }
   }
   /**
-   * @param {String} file
+   * @param {String} file file name
+   * @param {String} folder folder name
    * @returns String: file path
    */
   #databasePath(file = this.#date("date"), folder = "database") {
@@ -126,8 +129,32 @@ export default class CimaTube {
     const directoryPath = path.dirname(currentFilePath);
     return path.join(directoryPath, "..", folder, `${file}.json`);
   }
+  /**
+   * @description save given movie Files/Links array to database.
+   */
+  #saveToDatabase() {
+    writeFile(
+      this.#databasePath(`${this.#date("date")}_movie_links`),
+      JSON.stringify(
+        {
+          movieLinks: this.movieFiles,
+          date: this.#date("date"),
+        },
+        null,
+        4
+      ),
+      async (err) => {
+        if (err) {
+          this.#log(err.message);
+        } else {
+          this.#log("scrapped movie links saved at folder (database)");
+        }
+        await this.#terminate();
+      }
+    );
+  }
   /***
-   * @param {string} [type=""]
+   * @param {string}
    * @description Get's  the current date and time.
    * @returns date string
    *
@@ -162,7 +189,16 @@ export default class CimaTube {
           };
       }
     } catch (error) {
-      console.log(error.message);
+      this.#log(error.message);
     }
+  }
+
+  /**
+   *
+   * @param {*} output
+   * @description logs output to the terminal
+   */
+  #log(output) {
+    console.log("\t ", output);
   }
 }

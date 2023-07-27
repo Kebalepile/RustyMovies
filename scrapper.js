@@ -1,7 +1,7 @@
 import CimaTube from "./spiders/cimaTube.js";
 
 (async () => {
-  console.log("Btown Cinema");
+  console.log("B-Town Cinema");
   const spider = new CimaTube();
   await spider.launch();
 })();

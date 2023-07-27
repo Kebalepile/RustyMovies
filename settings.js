@@ -4,5 +4,5 @@
 export default {
     headless: false,
     executablePath:
-      "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+      "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
   };
