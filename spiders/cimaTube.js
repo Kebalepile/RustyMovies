@@ -3,6 +3,7 @@ import settings from "../settings.js";
 import { writeFile } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
+import { progress } from "../pipline/utils.js";
 
 export default class CimaTube {
   #name = "cima tube";
@@ -17,7 +18,7 @@ export default class CimaTube {
    * @description setup the broswer, page, default timeouts etc...
    */
   async launch() {
-    console.log("\t Launching: ", this.#name);
+    console.log(`Launching: ${this.#name}`);
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
     this.page.setDefaultNavigationTimeout(100000);
@@ -43,7 +44,7 @@ export default class CimaTube {
         });
 
         this.#log("Movie links:");
-        this.#log(movieLinks.map(l => l.title));
+        this.#log(movieLinks.map((l) => l.title));
 
         if (movieLinks.length) {
           await this.#processMovieLinks(movieLinks);
@@ -62,15 +63,17 @@ export default class CimaTube {
    * @param {array} movieLinks
    * @returns array of movie detail object
    */
-  async #processMovieLinks(movieLinks = []) {
+  async #processMovieLinks(movieLinks = [], count = 1) {
     if (movieLinks.length === 0) {
       return;
     }
+    // progress(count, movieLinks.length);
     const link = movieLinks.shift();
     const details = await this.#mediaDetails(link);
 
     this.movieFiles.push(details);
-    await this.#processMovieLinks(movieLinks);
+
+    await this.#processMovieLinks(movieLinks, count + 1);
   }
   /**
    * @description gets src and poster of given movie link.
