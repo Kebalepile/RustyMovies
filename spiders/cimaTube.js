@@ -22,9 +22,19 @@ export default class CimaTube {
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
     this.page.setDefaultNavigationTimeout(100000);
-    await this.search();
+    await this.daliySearch();
   }
-  async search() {
+  async searchMovie(){
+    try{
+
+    }catch (error){
+
+    }
+  }
+  /**
+   * @description search for latest movies being advertised to watch.
+   */
+  async daliySearch() {
     try {
       if (this.page) {
         this.#log("Browsing whitelist domain");
@@ -54,7 +64,9 @@ export default class CimaTube {
       }
       return;
     } catch (err) {
-      this.#log(err.message);
+      this.#log(`Error: ${err.message}`);
+      
+    }finally{
       await this.#terminate();
     }
   }
@@ -119,7 +131,7 @@ export default class CimaTube {
       }
       await this.browser.close();
     } catch (err) {
-      this.#log("Problem : ", err);
+      this.#log(`Error: ${err.message}`);
     }
   }
   /**
@@ -148,7 +160,7 @@ export default class CimaTube {
       ),
       async (err) => {
         if (err) {
-          this.#log(err.message);
+          this.#log(`Error: ${err.message}`);
         } else {
           this.#log("scrapped movie links saved at folder (database)");
         }
@@ -192,7 +204,7 @@ export default class CimaTube {
           };
       }
     } catch (error) {
-      this.#log(error.message);
+      this.#log(`Error: ${error.message}`);
     }
   }
 
