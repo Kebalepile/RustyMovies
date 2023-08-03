@@ -98,7 +98,7 @@ export default class CimaTube {
       if (links.length) {
         await this.#processMovieLinks(links);
         this.#log(this.movieFiles);
-        this.#saveToDatabase();
+        this.#saveToDatabase(`${this.#date("date")}_searched_movie_links`);
       }else{
         this.#log("No movies found.")
       }
@@ -223,7 +223,7 @@ export default class CimaTube {
   /**
    * @description save given movie Files/Links array to database.
    */
-  #saveToDatabase(file_name = `${this.#date("date")}_movie_links` ) {
+  #saveToDatabase(file_name = `${this.#date("date")}_trending_movie_links` ) {
     writeFile(
       this.#databasePath(file_name),
       JSON.stringify(
