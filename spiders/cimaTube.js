@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 import settings from "../settings.js";
-import { writeFile } from "fs";
+import { writeFile, readdir, readFile, readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
 import { progress } from "../pipline/utils.js";
@@ -19,16 +19,93 @@ export default class CimaTube {
    */
   async launch() {
     console.log(`Launching: ${this.#name}`);
+
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
     this.page.setDefaultNavigationTimeout(100000);
-    await this.daliySearch();
+    // await this.daliySearch();
+    await this.searchMovies();
   }
-  async searchMovie(){
-    try{
+  async #readSearchList() {
+    const directoryPath = "database\\lists";
 
-    }catch (error){
+    try {
+      let files = await new Promise((resolve, reject) => {
+        readdir(directoryPath, (err, files) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(files);
+          }
+        });
+      });
+      
+      if (files.length) {
+        files = files.filter((f) => f.startsWith("movies"));
+        for (const f of files) {
+          const fPath = `${directoryPath}\\${f}`;
+          const content = await new Promise((resolve, reject) => {
+            readFile(fPath, "utf8", (err, data) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(JSON.parse(data));
+              }
+            });
+          });
+          if (content.length) {
+            return content;
+          }
+          return null;
+        }
+      }
+    } catch (err) {
+      this.#log(`Error: ${err.message}`);
+    }
+  }
+  async searchMovies() {
+    const links = []
+    try {
+      const movieNames = await this.#readSearchList();
 
+      for (const name of movieNames) {
+        console.log("searching for movie named => " ,name)
+
+        await this.page.goto(`${this.#allowedDomains[0]} ${name.trim()}`);
+       
+         const urls = await this.page.evaluate(() => {
+          let elems = document.querySelectorAll(".Thumb--GridItem");
+          
+          elems = Array.from(elems);
+          if (elems.length) {
+            const links = elems.map((e) =>
+              {
+
+                return {
+                  title: e.querySelectorAll(".hasyear")[0].textContent,
+                  url: e.childNodes[0].getAttribute("href")
+                }
+              }
+            );
+            return links;
+          }
+          return elems;
+        });
+        links.push(...urls)
+      }
+  
+
+      if (links.length) {
+        await this.#processMovieLinks(links);
+        this.#log(this.movieFiles);
+        this.#saveToDatabase();
+      }else{
+        this.#log("No movies found.")
+      }
+    } catch (err) {
+      this.#log(`Error: ${err.message}`);
+    } finally {
+      await this.#terminate();
     }
   }
   /**
@@ -65,8 +142,7 @@ export default class CimaTube {
       return;
     } catch (err) {
       this.#log(`Error: ${err.message}`);
-      
-    }finally{
+    } finally {
       await this.#terminate();
     }
   }
@@ -147,9 +223,9 @@ export default class CimaTube {
   /**
    * @description save given movie Files/Links array to database.
    */
-  #saveToDatabase() {
+  #saveToDatabase(file_name = `${this.#date("date")}_movie_links` ) {
     writeFile(
-      this.#databasePath(`${this.#date("date")}_movie_links`),
+      this.#databasePath(file_name),
       JSON.stringify(
         {
           movieLinks: this.movieFiles,
