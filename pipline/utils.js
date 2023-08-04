@@ -11,5 +11,5 @@ export function progress(count, max) {
   process.stdout.write(`${count}/${max} (${percent}) scrapped movie links`);
 }
 function formatPercent(n) {
-  return (n * 100).toFixed(2) + "%";
+  return (n * 100).toFixed(0) + "%";
 }
