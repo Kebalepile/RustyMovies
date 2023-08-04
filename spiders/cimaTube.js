@@ -23,7 +23,7 @@ export default class CimaTube {
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
     this.page.setDefaultNavigationTimeout(100000);
-    // await this.daliySearch();
+    await this.daliySearch();
     await this.searchMovies();
   }
   async #readSearchList() {
@@ -39,10 +39,10 @@ export default class CimaTube {
           }
         });
       });
-      
+
       if (files.length) {
-        files = files.filter((f) => f.startsWith("movies"));
-        for (const f of files) {
+        files = await files.filter((f) => f.startsWith("movies"));
+        for await (const f of files) {
           const fPath = `${directoryPath}\\${f}`;
           const content = await new Promise((resolve, reject) => {
             readFile(fPath, "utf8", (err, data) => {
@@ -64,48 +64,45 @@ export default class CimaTube {
     }
   }
   async searchMovies() {
-    const links = []
+    const links = [];
     try {
       const movieNames = await this.#readSearchList();
 
-      for (const name of movieNames) {
-        console.log("searching for movie named => " ,name)
+      for await (const name of movieNames) {
+        this.#log(`searching for movie named => ${name}`);
 
         await this.page.goto(`${this.#allowedDomains[0]} ${name.trim()}`);
-       
-         const urls = await this.page.evaluate(() => {
+
+        const urls = await this.page.evaluate(() => {
           let elems = document.querySelectorAll(".Thumb--GridItem");
-          
+
           elems = Array.from(elems);
           if (elems.length) {
-            const links = elems.map((e) =>
-              {
-
-                return {
-                  title: e.querySelectorAll(".hasyear")[0].textContent,
-                  url: e.childNodes[0].getAttribute("href")
-                }
-              }
-            );
+            const links = elems.map((e) => {
+              return {
+                title: e.querySelectorAll(".hasyear")[0].textContent,
+                url: e.childNodes[0].getAttribute("href"),
+              };
+            });
             return links;
           }
           return elems;
         });
-        links.push(...urls)
+        links.push(...urls);
       }
-  
 
       if (links.length) {
+        // this.#log(links);
         await this.#processMovieLinks(links);
         this.#log(this.movieFiles);
         this.#saveToDatabase(`${this.#date("date")}_searched_movie_links`);
-      }else{
-        this.#log("No movies found.")
+      } else {
+        this.#log("No movies found.");
       }
     } catch (err) {
       this.#log(`Error: ${err.message}`);
     } finally {
-      await this.#terminate();
+      // await this.#terminate();
     }
   }
   /**
@@ -151,11 +148,13 @@ export default class CimaTube {
    * @param {array} movieLinks
    * @returns array of movie detail object
    */
-  async #processMovieLinks(movieLinks = [], count = 1) {
+  async #processMovieLinks(movieLinks = [], count = 0) {
     if (movieLinks.length === 0) {
       return;
     }
-    // progress(count, movieLinks.length);
+    // console.log(movieLinks)
+    progress( count, movieLinks.length);
+    
     const link = movieLinks.shift();
     const details = await this.#mediaDetails(link);
 
@@ -170,14 +169,17 @@ export default class CimaTube {
    * @returns movie details object
    */
   async #mediaDetails(movieLink, prevUrl = this.page.url()) {
+   
     await this.page.goto(movieLink.url);
 
     if (this.page.url() !== prevUrl) {
+  
       await this.page.waitForNetworkIdle();
       const frame = this.page
         .frames()
         .find((frame) => frame.name() === "watch");
       if (frame) {
+        
         const videoElement = await frame.$("#VideoPlayer_html5_api");
         const poster = await videoElement.evaluate((videoElem) =>
           videoElem.getAttribute("poster")
@@ -223,7 +225,7 @@ export default class CimaTube {
   /**
    * @description save given movie Files/Links array to database.
    */
-  #saveToDatabase(file_name = `${this.#date("date")}_trending_movie_links` ) {
+  #saveToDatabase(file_name = `${this.#date("date")}_trending_movie_links`) {
     writeFile(
       this.#databasePath(file_name),
       JSON.stringify(
