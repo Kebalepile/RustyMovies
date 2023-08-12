@@ -21,7 +21,7 @@ export default class CimaTube {
 
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
-    this.page.setDefaultNavigationTimeout(100000);
+    this.page.setDefaultNavigationTimeout(200000);
   
     try {
     } catch (err) {
@@ -59,7 +59,7 @@ export default class CimaTube {
         });
 
         if (urls.length) {
-          await this.#processMovieLinks(urls);
+          await this.#processMovieLinks(urls, urls.length);
 
           return await recursive(index + 1);
         }
@@ -103,7 +103,7 @@ export default class CimaTube {
         this.#log(movieLinks.map((l) => l.title));
 
         if (movieLinks.length) {
-          await this.#processMovieLinks(movieLinks);
+          await this.#processMovieLinks(movieLinks, movieLinks.length);
           // this.#log(this.movieFiles);
           this.#saveToDatabase();
         }
@@ -118,8 +118,9 @@ export default class CimaTube {
    * @param {array} movieLinks
    * @returns array of movie detail object
    */
-  async #processMovieLinks(movieLinks = [], count = 0) {
-    if (movieLinks.length === 0) {
+  async #processMovieLinks(movieLinks = [],total = movieLinks.length, count = 0) {
+    console.log(((count / movieLinks.length) * 100).toFixed(0)+"% "+count + " of " + total)
+    if (total === count) {
       return;
     }
 
@@ -128,7 +129,7 @@ export default class CimaTube {
 
     this.movieFiles.push(details);
 
-    await this.#processMovieLinks(movieLinks, count + 1);
+    await this.#processMovieLinks(movieLinks,total, count + 1);
   }
   /**
    * @description gets src and poster of given movie link.
@@ -141,7 +142,7 @@ export default class CimaTube {
 
     if (this.page.url() !== prevUrl) {
       await this.page.waitForNetworkIdle();
-
+      console.log(this.page.url())
       const frame = this.page
         .frames()
         .find((frame) => frame.name() === "watch");
