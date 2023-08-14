@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/Kebalepile/RustyMovies#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "^5.7.0",
     "puppeteer": "^20.9.0"
   }
 }
