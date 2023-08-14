@@ -3,6 +3,7 @@ import settings from "../settings.js";
 import { writeFile, readdir, readFile } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
+import { progress } from "../pipline/utils.js";
 
 export default class CimaTube {
   #name = "cima tube";
@@ -21,12 +22,12 @@ export default class CimaTube {
 
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
-    this.page.setDefaultNavigationTimeout(200000);
-  
+    this.page.setDefaultNavigationTimeout(90000);
+
     try {
     } catch (err) {
       this.#log(`Error: ${err.message}`);
-    } 
+    }
   }
 
   async searchMovies() {
@@ -75,7 +76,7 @@ export default class CimaTube {
       }
     } catch (err) {
       this.#log(`Error: ${err.message}`);
-    } 
+    }
   }
   /**
    * @description search for latest movies being advertised to watch.
@@ -103,12 +104,11 @@ export default class CimaTube {
         this.#log(movieLinks.map((l) => l.title));
 
         if (movieLinks.length) {
-          await this.#processMovieLinks(movieLinks, movieLinks.length);
+          await this.#processMovieLinks(movieLinks);
           // this.#log(this.movieFiles);
           this.#saveToDatabase();
         }
       }
-     
     } catch (err) {
       this.#log(`Error: ${err.message}`);
     }
@@ -118,18 +118,18 @@ export default class CimaTube {
    * @param {array} movieLinks
    * @returns array of movie detail object
    */
-  async #processMovieLinks(movieLinks = [],total = movieLinks.length, count = 0) {
-    console.log(((count / movieLinks.length) * 100).toFixed(0)+"% "+count + " of " + total)
-    if (total === count) {
+  async #processMovieLinks(movieLinks = [], total = arguments[0].length, count = 0) {
+    progress(count, total);
+    if (movieLinks.length == 0) {
       return;
     }
 
-    const link = movieLinks.shift();
+    const link = movieLinks.pop();
     const details = await this.#mediaDetails(link);
 
     this.movieFiles.push(details);
 
-    await this.#processMovieLinks(movieLinks,total, count + 1);
+    await this.#processMovieLinks(movieLinks, total, count + 1);
   }
   /**
    * @description gets src and poster of given movie link.
@@ -142,7 +142,7 @@ export default class CimaTube {
 
     if (this.page.url() !== prevUrl) {
       await this.page.waitForNetworkIdle();
-      console.log(this.page.url())
+      // console.log(this.page.url());
       const frame = this.page
         .frames()
         .find((frame) => frame.name() === "watch");
@@ -244,7 +244,7 @@ export default class CimaTube {
         if (err) {
           this.#log(`Error: ${err.message}`);
         } else {
-          this.#log("scrapped movie links saved at folder (database)");
+          this.#log("\n scrapped movie links saved at folder (database)");
         }
       }
     );
