@@ -22,7 +22,7 @@ export default class CimaTube {
 
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
-    this.page.setDefaultNavigationTimeout(90000);
+    this.page.setDefaultNavigationTimeout(100000);
 
     try {
     } catch (err) {
@@ -30,7 +30,7 @@ export default class CimaTube {
     }
   }
 
-  async searchMovies() {
+  async RecommendedMovies() {
     try {
       const movieNames = await this.#readSearchList();
       const recursive = async (index = 0) => {
@@ -81,7 +81,7 @@ export default class CimaTube {
   /**
    * @description search for latest movies being advertised to watch.
    */
-  async daliySearch() {
+  async TrendingMovies() {
     try {
       if (this.page) {
         this.#log("Browsing whitelist domain");
@@ -204,7 +204,7 @@ export default class CimaTube {
   /***
    * @description close Puppeteer Web Scraper.
    */
-  async terminate() {
+  async Terminate() {
     try {
       if (this.browser && this.page) {
         await this.page.goto("about:blank");
@@ -212,6 +212,7 @@ export default class CimaTube {
         return;
       }
       await this.browser.close();
+      return true
     } catch (err) {
       this.#log(`Error: ${err.message}`);
     }

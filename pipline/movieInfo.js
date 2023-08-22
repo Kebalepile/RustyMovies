@@ -8,9 +8,6 @@ import { fileURLToPath } from "url";
 import {
   MongoDBConnect,
   InsertMany,
-  InsertOne,
-  FindMany,
-  FindOne,
   names,
   closeDBConnection,
 } from "./mongoDB.js";

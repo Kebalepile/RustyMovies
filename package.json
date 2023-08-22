@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "watch movies, binge series and chat with strangers",
   "type": "module",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "write": "node list_maker.js",
-    "crawl": "node scrapper"
+    "crawl": "node main"
   },
   "repository": {
     "type": "git",
