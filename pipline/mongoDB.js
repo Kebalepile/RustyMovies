@@ -20,7 +20,7 @@ export const names = [
   "comming_soon_movies",
 ];
 
-const uri = `${dbHost}://${dbUser}:${dbPassword}@cluster0.mcpuyxa.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `${dbHost}://${dbUser}:${dbPassword}@cluster0.bdl296a.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
