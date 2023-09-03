@@ -32,7 +32,15 @@ export async function Trending() {
 
     files = files.filter((f) => f.includes("trending"));
 
-    const documents = await getFileContents(files);
+    let documents = await getFileContents(files);
+    documents = documents.reduce((accumulator, value) => {
+      let found = accumulator.find((doc) => doc.src == value.src);
+      if (!found) {
+        value.date = currentDate();
+        accumulator.push(value);
+      }
+      return accumulator;
+    }, []);
     const connected = await MongoDBConnect();
 
     if (connected) {
@@ -65,7 +73,15 @@ export async function Recommended() {
       });
     });
     files = files.filter((f) => f.includes("searched"));
-    const documents = await getFileContents(files);
+    let documents = await getFileContents(files);
+    documents = documents.reduce((accumulator, value) => {
+      let found = accumulator.find((doc) => doc.src == value.src);
+      if (!found) {
+        value.date = currentDate();
+        accumulator.push(value);
+      }
+      return accumulator;
+    }, []);
     const connected = await MongoDBConnect();
 
     if (connected) {
@@ -128,4 +144,20 @@ function uniqueDocuments(documents) {
     }
     return acc;
   }, []);
+}
+/**
+ * @description generates todays date
+ * @returns date in string type
+ */
+function currentDate() {
+  /**
+   * @param {number} num
+   * @description pad the date string
+   */
+  const pad = (num) => num.toString().padStart(2, "0"),
+    date = new Date(),
+    year = date.getFullYear(),
+    month = date.toLocaleString("default", { month: "long" }),
+    day = date.getDate();
+  return `${day}-${pad(month)}-${pad(year)}`;
 }
