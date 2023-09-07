@@ -22,7 +22,7 @@ export default class CimaTube {
 
     this.browser = await puppeteer.launch(settings);
     this.page = await this.browser.newPage();
-    this.page.setDefaultNavigationTimeout(100000);
+    this.page.setDefaultNavigationTimeout(200000);
 
     try {
     } catch (err) {
