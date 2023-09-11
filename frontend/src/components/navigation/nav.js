@@ -9,30 +9,61 @@ export default () => {
         {
           type: "nav",
           id: "navigation",
+          classes: "menu",
           children: [
+            {
+              type: "img",
+              id: "logo",
+              attributes: {
+                src: "./src/image/icons/favicon.png",
+                alt: "logo image",
+              },
+            },
+            {
+              type: "input",
+              id: "toggle",
+              attributes: { type: "checkbox" },
+            },
+            {
+              type: "label",
+              attributes: { for: "toggle" },
+              children: [
+                {
+                  type: "span",
+                  content: String.fromCharCode(9776),
+                },
+              ],
+            },
             {
               type: "ul",
               id: "nav_links",
-              children: new Array(3).fill().map((_, i) => ({
+              children: new Array(2).fill().map((_, i) => ({
                 type: "li",
                 class: "page_link",
+                id: "install",
                 children: [
                   i === 0
                     ? {
-                        type: "a",
-                        content: "home",
-                        attributes: { href: "./index.html" },
-                      }
-                    : i === 1
-                    ? {
-                        type: "a",
-                        content: "movies",
-                        attributes: { href: "./movies.html" },
+                        type: "div",
+
+                        children: [
+                          {
+                            type: "img",
+                            attributes: {
+                              src: "./src/image/icons/download.png",
+                              alt: "download icon",
+                            },
+                          },
+                          {
+                            type: "p",
+                            content: "install",
+                          },
+                        ],
                       }
                     : {
                         type: "a",
-                        content: "about",
-                        attributes: { href: "./about.html" },
+                        content: "About",
+                        attributes: { href: "#about" },
                       },
                 ],
               })),

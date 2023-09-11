@@ -1,33 +1,34 @@
 import nav from "./components/navigation/nav.js";
+import pwaInstallPrompt from "./components/prompts/pwaInstallPrompt.js";
+
 nav();
 
-import {
-  Home,
-  Request,
-  Recommended,
-  Trending,
-} from "./components/cimaTube/api.js";
-import { apiUrl, options } from "./components/cimaTube/url.js";
-// import { Decrypt } from "./utils/encryption/encrypt.js";
-import { RequestData } from "./components/cimaTube/Request.js";
-(async () => {
-  let res = await Home(apiUrl, options);
-  console.log("Home");
-  console.table(res);
+const installButton = document.querySelector("#install");
 
-  res = await Trending(apiUrl, options);
-  console.log("Trending");
-  console.table(res);
+pwaInstallPrompt(installButton);
 
-  res = await Recommended(apiUrl, options);
-  console.log("Recommended");
-  console.table(res);
+/**
+ * @description remove install button once web app is installed
+ */
+if (window.matchMedia(" (display-mode: standalone)").matches) {
+  // PWA is installed
 
-    const data = RequestData({
-      query: "Kill Bill",
-      email: "koko@outlok.com",
-      mediaHandle: "@twiter/kokij",
-    });
-    res = await Request(apiUrl, data);
-    console.table(res);
-})();
+  if (installButton) installButton.remove();
+}
+// (function () {
+//   let intervalId = setInterval(function a() {
+//       try {
+//           (function b(i) {
+//               if (('' + (i / i)).length !== 1 || i % 20 === 0) {
+//                   (function () { }).constructor('debugger')()
+//               } else {
+//                   debugger
+//               }
+//               b(++i)
+//           })(0)
+//       } catch (e) {
+//           clearInterval(intervalId);
+//           intervalId = setInterval(a);
+//       }
+//   });
+// })();
