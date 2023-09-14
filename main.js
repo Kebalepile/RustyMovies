@@ -1,6 +1,6 @@
 import CimaTube from "./spiders/cimaTube.js";
 
-import { Trending, Recommended } from "./pipline/movieInfo.js";
+// import { Trending, Recommended } from "./pipline/movieInfo.js";
 
 async function TrendingCrawl() {
   try {
@@ -10,7 +10,7 @@ async function TrendingCrawl() {
     await spider.TrendingMovies();
     await spider.Terminate();
 
-    await Trending();
+    // await Trending();
   } catch (err) {
     console.error(err);
   }
@@ -26,7 +26,7 @@ async function RecommendedCrawl() {
     await spider.RecommendedMovies();
     await spider.Terminate();
 
-    await Recommended();
+    // await Recommended();
   } catch (err) {
     console.log(err);
   }
