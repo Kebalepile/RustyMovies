@@ -17,7 +17,7 @@ func WriteJavaScript(name string, cipherText []string) {
 	joinedStrings := strings.Join(quotedStrings, ", ")
 
 	code := fmt.Sprintf("export function links() {\n\treturn [%s];\n}", joinedStrings)
-	fileName := name + "Cipher.js"
+	fileName := strings.ReplaceAll(name+"Cipher.js", " ", "")
 	err := os.WriteFile(fileName, []byte(code), 0644)
 	if err != nil {
 		panic(err)
