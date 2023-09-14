@@ -2,12 +2,12 @@ const cacheName = "Rusty🎬 Biskop",
 // change '/frontend' when in production
   items = [
     "/",
-    "/frontend/index.html",
-    "/frontend/src/css/main.css",
-    "/frontend/src/main.js",
-    "/frontend/src/components/navigation/nav.js",
-    "/frontend/src/components/pages/home.js",
-    "/frontend/src/components/pages/watch.js",
+    "/index.html",
+    "/src/css/main.css",
+    "/src/main.js",
+    "/src/components/navigation/nav.js",
+    "/src/components/pages/home.js",
+    "/src/components/pages/watch.js",
   ];
 
 self.addEventListener("install", (e) => {

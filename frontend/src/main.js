@@ -1,5 +1,7 @@
+import serviceWorker from "./workers/serviceWorker/installServiceWorker.js";
 import nav from "./components/navigation/nav.js";
 import pwaInstallPrompt from "./components/prompts/pwaInstallPrompt.js";
+import Home from "./components/pages/home.js";
 
 nav();
 
@@ -15,6 +17,8 @@ if (window.matchMedia(" (display-mode: standalone)").matches) {
 
   if (installButton) installButton.remove();
 }
+Home();
+serviceWorker();
 // (function () {
 //   let intervalId = setInterval(function a() {
 //       try {
