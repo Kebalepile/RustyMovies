@@ -1,13 +1,11 @@
 import { watch } from "./watch.js";
 import { toggleVideoDialog } from "../../utils/features.js";
 import download from "../../utils/download.js";
-
-import { links as one } from "../../database/15-September-2023_trending_movie_links.jsonCipher.js";
-import { links as two } from "../../database/15-September-2023_searched_movie_links_tyron,jackass forever.jsonCipher.js";
-import { Decrypt } from "../../utils/encryption/encrypt.js";
-import uniqueObjects from "../../utils/uniqueObjects.js";
-import {importTrendingFiles, importRecommendedFiles} from "../../utils/funnel.js"
-
+import { uniqueObjects, uniqueArray } from "../../utils/uniqueObjects.js";
+import {
+  importTrendingFiles,
+  importRecommendedFiles,
+} from "../../utils/funnel.js";
 
 /**
  * @description The `Home` function is an asynchronous function that updates the home page of a website with trending and recommended content.
@@ -19,29 +17,23 @@ import {importTrendingFiles, importRecommendedFiles} from "../../utils/funnel.js
  *  If an error occurs during execution, it is caught and logged to the console.
  */
 export default async function Home() {
-  let l = await importTrendingFiles()
-  console.log(l)
-  let b = await importRecommendedFiles()
-  console.log(b)
   try {
     const installBtn = document.querySelector("#install");
     installBtn.addEventListener("click", () => {
       console.log("install web app");
     });
+
     const tempTrendingPosters = document.querySelector(".trending"),
       tempRecommendedPosters = document.querySelector(".recommended");
 
-    let streamingNow = [],
-      trending = [ ...one()];
-
-    for (const cipherText of trending) {
-      let { movieLinks } = await Decrypt(cipherText);
-      streamingNow.push(...movieLinks);
-    }
+    let streamingNow = await importTrendingFiles(),
+      recommended = await importRecommendedFiles();
 
     if (streamingNow?.length) {
-      streamingNow = uniqueObjects(streamingNow);
-      
+      streamingNow = uniqueObjects(
+        uniqueArray(streamingNow, recommended.length ? recommended : [])
+      );
+
       tempTrendingPosters.style.display = "none";
       const trendingSlide = document.querySelector("#trending");
 
@@ -51,13 +43,6 @@ export default async function Home() {
       createPoster(postersElem, streamingNow);
 
       trendingSlide.appendChild(postersElem);
-    }
-    let recommended = [],
-      mustWatch = [...two()];
-
-    for (const cipherText of mustWatch) {
-      let { movieLinks } = await Decrypt(cipherText);
-      recommended.push(...movieLinks);
     }
 
     if (recommended?.length) {

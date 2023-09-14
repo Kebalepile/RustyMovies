@@ -1,19 +1,12 @@
+import { Decrypt } from "./encryption/encrypt.js";
 const folderPath = "./src/database";
+
 export async function importTrendingFiles() {
   try {
-    const files = await fileLink("trending_movie_links");
+    const files = await getFile("trending_movie_links");
 
     if (files?.length) {
-      let uniqueLinks = new Set();
-
-      for (const f of files) {
-        const url = `../database/${f.split(" ")[5].replace(/title="/, "")}`,
-          module = await import(url),
-          links = await module.links();
-
-        uniqueLinks = new Set([...uniqueLinks, ...links]);
-      }
-      return [...uniqueLinks];
+      return await cipherText(files);
     }
   } catch (err) {
     console.log(err.message);
@@ -22,20 +15,10 @@ export async function importTrendingFiles() {
 
 export async function importRecommendedFiles() {
   try {
-    const files = await fileLink("searched_movie_links");
+    const files = await getFile("searched_movie_links");
 
     if (files?.length) {
-      let uniqueLinks = new Set();
-
-      for (const f of files) {
-        console.log(f.split(" "))
-        const url = `../database/${f.split(" ")[5].replace(/title="/, "")}`,
-          module = await import(url),
-          links = await module.links();
-
-        uniqueLinks = new Set([...uniqueLinks, ...links]);
-      }
-      return [...uniqueLinks];
+      return await cipherText(files);
     }
   } catch (err) {
     console.log(err.message);
@@ -46,7 +29,7 @@ export async function importRecommendedFiles() {
  * @description look for files that include given name argument
  * @returns array of links
  */
-async function fileLink(name) {
+async function getFile(name) {
   try {
     const response = await fetch(folderPath),
       directoryListing = await response.text(),
@@ -57,6 +40,34 @@ async function fileLink(name) {
     return fileNames.filter(
       (file) => file.includes(name) && file.endsWith(".js")
     );
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+/**
+ *
+ * @param {array} files
+ * @description reads ciphertext of given file names, decrypts it and returns the contents
+ * @returns array of objects
+ */
+async function cipherText(files) {
+  try {
+    let object = {
+      movieLinks: [],
+    };
+
+    for (const f of files) {
+      const url = `../database/${f.split(" ")[5].replace(/title="/, "")}`,
+        module = await import(url);
+      const links = await module.links();
+
+      for (const link of links) {
+        const { movieLinks } = await Decrypt(link);
+        object.movieLinks.push(...movieLinks);
+      }
+    }
+
+    return object.movieLinks;
   } catch (err) {
     console.log(err.message);
   }
