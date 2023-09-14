@@ -222,7 +222,7 @@ export default class CimaTube {
    * @param {String} folder folder name
    * @returns String: file path
    */
-  #databasePath(file = this.#date("date"), folder = "database") {
+  #databasePath(file = this.#date("date"), folder = "./go_encryption/database") {
     const currentFilePath = fileURLToPath(import.meta.url);
     const directoryPath = path.dirname(currentFilePath);
     return path.join(directoryPath, "..", folder, `${file}.json`);
