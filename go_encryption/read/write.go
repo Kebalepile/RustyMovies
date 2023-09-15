@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func WriteJavaScript(cipherText []string) {
+func WriteJavaScript(name string, cipherText []string) {
 	// Convert each string in the slice to a quoted string
 	quotedStrings := make([]string, len(cipherText))
 	for i, str := range cipherText {
@@ -16,12 +16,12 @@ func WriteJavaScript(cipherText []string) {
 	// Join the quoted strings into a single string
 	joinedStrings := strings.Join(quotedStrings, ", ")
 
-	code := fmt.Sprintf("export default function links() {\n\treturn [%s];\n}", joinedStrings)
-
-	err := os.WriteFile("cipherText.js", []byte(code), 0644)
+	code := fmt.Sprintf("export function links() {\n\treturn [%s];\n}", joinedStrings)
+	fileName := name + "Cipher.js"
+	err := os.WriteFile(fileName, []byte(code), 0644)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println("'cipherText.js' file created")
+	fmt.Println(fileName, " file created")
 }

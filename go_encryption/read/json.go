@@ -13,8 +13,8 @@ import (
 func FindFiles() (map[string][]string, error) {
 
 	json_files := map[string][]string{
-		"must_watch": {},
-		"trending":   {},
+		"recommended": {},
+		"trending":    {},
 	}
 
 	files_dir := "database"
@@ -25,9 +25,9 @@ func FindFiles() (map[string][]string, error) {
 
 		if !info.IsDir() && filepath.Ext(file_path) == ".json" {
 
-			if strings.Contains(info.Name(), "searched") {
-				must_watch := json_files["must_watch"]
-				json_files["must_watch"] = append(must_watch, file_path)
+			if strings.Contains(info.Name(), "recommended") {
+				must_watch := json_files["recommended"]
+				json_files["recommended"] = append(must_watch, file_path)
 
 			} else if strings.Contains(info.Name(), "trending") {
 
@@ -137,9 +137,9 @@ func EncryptEncodeFiles() {
 	// Recevie the contents from the channel and print it to the cmd
 	for k, files := range json_files {
 		log.Println("Reading " + k + " files.")
-		for range files {
+		for _, v := range files {
 			contents := <-fileContentChan
-			// log.Println(string(contents))
+
 			var movies e.Movies
 			err = json.Unmarshal(contents, &movies)
 			if err != nil {
@@ -149,13 +149,11 @@ func EncryptEncodeFiles() {
 			if err != nil {
 				panic(err)
 			}
-			// log.Println(encrypted)
-			
 			cipherText = append(cipherText, encrypted)
+			WriteJavaScript("./js/"+v[9:], cipherText)
 			log.Println(("--------------skip------------"))
 		}
 
 	}
-	WriteJavaScript(cipherText)
 
 }
