@@ -165,7 +165,7 @@ export default class CimaTube {
     }
   }
   async #readSearchList() {
-    const directoryPath = "database\\lists";
+    const directoryPath = "go_encryption\\database\\lists";
 
     try {
       let files = await new Promise((resolve, reject) => {
