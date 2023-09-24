@@ -31,5 +31,5 @@ async function RecommendedCrawl() {
     console.log(err);
   }
 }
-RecommendedCrawl();
-// TrendingCrawl();
+// RecommendedCrawl();
+TrendingCrawl();
