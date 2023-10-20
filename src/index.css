@@ -4,16 +4,17 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  text-align: justify;
 
   --main: #252525;
   --c2: #1c242c;
@@ -23,14 +24,7 @@
   --c6: #00ff00;
   --c7: #b9b9b9;
 }
-* {
-  font-family: sans-serif;
 
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  text-align: justify;
-}
 
 body {
   background-color: var(--c2);
@@ -41,13 +35,13 @@ body {
 }
 
 /* banner styles */
-#welcome_banner {
+#welcome-banner {
   position: absolute;
   top: 100px;
   left: 10%;
   height: 200px;
   width: 80dvw;
-  background-image: url("../image/banner_bg.jpg");
+  background-image: url("./assets/img/banner_bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
   transition: filter 0.3s, box-shadow 0.3s;
@@ -57,7 +51,7 @@ body {
   border-radius: 5px;
 }
 
-.banner_msg {
+.banner-msg {
   z-index: 3;
   width: inherit;
   height: inherit;
@@ -70,11 +64,11 @@ body {
   justify-content: center;
   align-items: center;
 }
-#welcome_banner:hover .banner_msg {
+#welcome-banner:hover .banner-msg {
   opacity: 1;
   background-color: var(--c5);
 }
-#welcome_banner:hover {
+#welcome-banner:hover {
   filter: brightness(100%);
 }
 #install div {
@@ -111,16 +105,16 @@ body {
   border-radius: 2px;
 }
 .temp-poster {
-  height: 250px;
-  width: 200px;
+  height: 200px;
+  width: 150px;
   border-radius: 3px;
   margin: 3px;
   cursor: pointer;
   animation: wave 3s ease-in-out infinite;
-  background: linear-gradient(90deg, #241c1c, #1c242c, #252525, #161c23);
+  background: linear-gradient(100deg, #2b2a2a, #1c242c, #252525, #2e3135);
   background-size: 400% 400%;
 }
-.movies_slide h1 {
+.movies-slide h1 {
   color: rgb(108, 231, 6);
   background-color: rgb(34, 34, 41);
   border-radius: 5px;
@@ -134,8 +128,8 @@ body {
 }
 
 .poster {
-  height: 250px;
-  width: 200px;
+  height: 200px;
+  width: 150px;
   border-radius: 3px;
   margin: 5px 5px 40px 5px;
   cursor: pointer;
@@ -579,7 +573,7 @@ footer {
 
     margin: 1px 1px 1px 20px;
   }
-  .movies_slide h1 {
+  .movies-slide h1 {
     width: 300px;
   }
   .temp-posters {

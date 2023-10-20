@@ -1,11 +1,17 @@
 
-import Watch from "./components/watch";
+// import Watch from "./components/watch";
+import Navbar from "./components/navbar";
+import Main from "./components/main";
+import Footer from "./components/footer";
 
 function App() {
   return (
     <>
-      <h2>Hello World</h2>
-      <Watch/>
+   
+      {/* <Watch/> */}
+      <Navbar/>
+      <Main/>
+      <Footer/>
     </>
   );
 }
