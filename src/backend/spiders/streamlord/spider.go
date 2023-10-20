@@ -103,6 +103,9 @@ func (s *Spider) movies(ctx context.Context) {
 	s.save("mData", "movies")
 }
 
+// generate slices of series data
+func (s*Spider) series(ctx context.Context){}
+
 // retrive iframe
 func (s *Spider) iframe(ctx context.Context, m *types.MovieInfo) {
 	var origin string
