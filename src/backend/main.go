@@ -12,7 +12,7 @@ func main() {
 	log.Println("Movie info scrapper initiated.")
 	
 	streamlordSpider := streamlord.Spider{
-		Name: "streamlord",
+		Name: "Streamlord",
 		AllowedDomains: []string{
 			"http://www.streamlord.com/index.html",
 		},
