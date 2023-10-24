@@ -1,1 +1,7 @@
-ECHO is on.
+package main
+import(
+	"log"
+)
+func main(){
+log.Println("hello")
+}
