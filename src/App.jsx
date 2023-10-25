@@ -1,9 +1,9 @@
-// import './App.css'
+import { greet } from "./backend/database/test";
 
 function App() {
   return (
     <>
-      <h2>Hello World</h2>
+      <h2>{greet}</h2>
     </>
   );
 }
