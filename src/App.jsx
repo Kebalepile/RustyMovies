@@ -1,9 +1,11 @@
-import { greet } from "./backend/database/test";
+
+import Watch from "./components/watch";
 
 function App() {
   return (
     <>
-      <h2>{greet}</h2>
+      <h2>Hello World</h2>
+      <Watch/>
     </>
   );
 }
