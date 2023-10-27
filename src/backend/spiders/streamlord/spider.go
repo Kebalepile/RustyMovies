@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	c "github.com/chromedp/chromedp"
+	"github.com/chromedp/chromedp"
 )
 
 type Spider struct {
@@ -25,22 +25,22 @@ func (s *Spider) Init(wg *sync.WaitGroup) {
 
 	log.Println(s.Name, " spider initiated ", s.date())
 	// chromedp options
-	opts := append(c.DefaultExecAllocatorOptions[:],
-		c.Flag("headless", true), // set headless to true for production
-		c.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"),
-		// c.WindowSize(768, 1024), // Tablet size
+	opts := append(chromedp.DefaultExecAllocatorOptions[:],
+		chromedp.Flag("headless", false), // set headless to true for production
+		chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"),
+		// chromedp.WindowSize(768, 1024), // Tablet size
 	)
 
-	ctx, cancel := c.NewExecAllocator(context.Background(), opts...)
+	ctx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
 	defer cancel()
 
-	ctx, cancel = c.NewContext(ctx)
+	ctx, cancel = chromedp.NewContext(ctx)
 	s.Shutdown = cancel
 
 	var origin string
-	err := c.Run(ctx,
-		c.Navigate(s.AllowedDomains[0]),
-		c.Location(&origin),
+	err := chromedp.Run(ctx,
+		chromedp.Navigate(s.AllowedDomains[0]),
+		chromedp.Location(&origin),
 	)
 	s.error(err)
 	s.sleep(10)
@@ -53,6 +53,7 @@ func (s *Spider) Init(wg *sync.WaitGroup) {
 
 // generate slices of movie data
 func (s *Spider) movies(ctx context.Context) {
+	log.Println("scrapping movie data")
 
 	expression := fmt.Sprintf(`
 	(() => {
@@ -62,24 +63,36 @@ func (s *Spider) movies(ctx context.Context) {
 		if (mLists.length){
 	
 			mLists.forEach((l,i) => {
-			i === 0 ? categories.featured = document.querySelectorAll(".item.movie"): categories.latest = document.querySelectorAll(".item.movie")
+				i === 0 ? 
+				categories.featured = Array.from(l.querySelectorAll(".item.movie")):
+				categories.latest = Array.from(l.querySelectorAll(".item.movie"))
 			});
 	
 			categories.featured = categories.featured.map(i => {
 				const data = {};
-				const img i.querySelector('a img');
+				const img = i.querySelector('a img');
 				data.poster = img.src;
-				data.href = i.parentElement.href;
-				data.title = data.href.match(/watch-movie-(.*?)-\d+\.html/)[1].replaceAll("-", " ");
+				data.href = img.parentElement.href;
+				data.title = data.href.match(/watch-movie-(.*?)-\d+\.html/);
+
+				Array.isArray(data.title) ? 
+				data.title = data.title[1].replaceAll("-", " ") :
+				data.title = ""
+
 				return data;
 			});
 
 			categories.latest =  categories.latest.map(i => {
 				const data = {};
-				const img i.querySelector('a img');
+				const img = i.querySelector('a img');
 				data.poster = img.src;
-				data.href = i.parentElement.href;
-				data.title = data.href.match(/watch-movie-(.*?)-\d+\.html/)[1].replaceAll("-", " ");
+				data.href = img.parentElement.href;
+				data.title = data.href.match(/watch-movie-(.*?)-\d+\.html/);
+
+				Array.isArray(data.title) ? 
+				data.title = data.title[1].replaceAll("-", " ") :
+				data.title = ""
+
 				return data;
 			});
 
@@ -88,8 +101,9 @@ func (s *Spider) movies(ctx context.Context) {
 		}
 	})()`)
 
-	err := c.Run(ctx,
-		c.Evaluate(expression, &s.Categories))
+	err := chromedp.Run(ctx,
+		chromedp.ScrollIntoView(`#movieslist`, chromedp.ByID),
+		chromedp.Evaluate(expression, &s.Categories))
 
 	s.error(err)
 	s.sleep(5)
@@ -104,23 +118,23 @@ func (s *Spider) movies(ctx context.Context) {
 }
 
 // generate slices of series data
-func (s*Spider) series(ctx context.Context){}
+func (s *Spider) series(ctx context.Context) {}
 
 // retrive iframe
 func (s *Spider) iframe(ctx context.Context, m *types.MovieInfo) {
 	var origin string
 
-	err := c.Run(ctx,
-		c.Navigate(m.Href),
-		c.Location(&origin))
+	err := chromedp.Run(ctx,
+		chromedp.Navigate(m.Href),
+		chromedp.Location(&origin))
 
 	s.error(err)
 	s.sleep(5)
 
 	if origin == m.Href {
 		expression := fmt.Sprintf(`document.querySelector("#iframe").src`)
-		err = c.Run(ctx,
-			c.Evaluate(expression, m.IframeSrc))
+		err = chromedp.Run(ctx,
+			chromedp.Evaluate(expression, &m.IframeSrc))
 		s.error(err)
 		s.sleep(5)
 	}
@@ -128,6 +142,7 @@ func (s *Spider) iframe(ctx context.Context, m *types.MovieInfo) {
 
 // save data to *.js or *.json file
 func (s *Spider) save(name, folder string) {
+	log.Println("saving data")
 
 	err := pipeline.ToJavaScript(name, folder, &s.Categories)
 	s.error(err)
@@ -154,6 +169,7 @@ func (s Spider) error(err error) {
 		log.Println("Error from: ", s.Name, " spider")
 		log.Println(err.Error())
 		log.Println("Please restart scrapper")
+		log.Println(err)
 		log.Println("*************************************")
 		log.Fatal(err)
 	}
