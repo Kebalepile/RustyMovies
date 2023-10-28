@@ -13,13 +13,13 @@ export default function Recommend() {
       <h1>Recommended </h1>
       <br />
       {movies.length ? (
-        <section className="poster">
+        <section className="posters">
           {movies.map((m, i) => {
             return (
-              <figure className="poster" key={i}>
-                <div className="poster_shadow"></div>
-                <span className="play_button">▶</span>
-
+              <figure className="poster" key={i}onClick={() =>context.Watch(m)} onContextMenu={e => e.preventDefault()}>
+              <div className="poster_shadow"></div>
+              <span className="play_button">▶</span>
+          
                 <div id="download-wrapper">
                   <button id="download" onClick={Download}>
                     download

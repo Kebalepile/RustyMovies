@@ -7,16 +7,17 @@ export default function Trending() {
   const Download = () => {
     console.log("download");
   };
+ 
   return (
     <section id="trending" className="movies-slide">
       <br />
       <h1>Streaming Now</h1>
       <br />
       {movies.length ? (
-        <section className="poster">
+        <section className="posters">
           {movies.map((m, i) => {
             return (
-              <figure className="poster" key={i}>
+              <figure className="poster" key={i}onClick={() =>context.Watch(m)} onContextMenu={e => e.preventDefault()}>
                 <div className="poster_shadow"></div>
                 <span className="play_button">▶</span>
             
