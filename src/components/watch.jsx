@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import  { useContext, useRef } from "react";
 import MoviesContext from "../context/movies/context";
 
 export default function Watch() {
@@ -18,7 +18,7 @@ export default function Watch() {
           <button id="close-dialog" onClick={closeDialog}>
             x
           </button>
-          <div style={{ width: "90%", height: "75%", boarderRadius: "8px" }}>
+          <div style={{ width: "90%", height: "80%" }}>
             <iframe
               src={info.iframeSrc}
               width="100%"

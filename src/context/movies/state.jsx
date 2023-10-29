@@ -23,7 +23,6 @@ export default function MoviesProvider({ children }) {
   const Trending = () => streaming;
   const Recommended = () => recommended;
   const Watch = (movie) => {
-    console.log("watching: ", movie.title);
     dispatch({
       type: PLAY,
       payload: {
