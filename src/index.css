@@ -15,6 +15,7 @@
   padding: 0;
   margin: 0;
   text-align: justify;
+  
 
   --main: #252525;
   --c2: #1c242c;
@@ -24,7 +25,6 @@
   --c6: #00ff00;
   --c7: #b9b9b9;
 }
-
 
 body {
   background-color: var(--c2);
@@ -133,7 +133,11 @@ body {
   border-radius: 3px;
   margin: 5px 5px 40px 5px;
   cursor: pointer;
+  position:relative;
+ 
+
 }
+
 
 .poster_shadow {
   z-index: 3;
@@ -153,13 +157,25 @@ body {
   background-color: var(--c5);
 }
 .play_button {
-  font-size: 0;
+  font-size: 30px;
   color: transparent;
+ 
   transition: color 0.3s ease, font-size 0.4s ease-in-out;
+  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
+ 
+  
+  
 }
 .poster:hover .play_button {
   font-size: 50px;
   color: limegreen;
+  transition: all ease-in;
+  text-align: center;
 }
 #download-wrapper {
   width: inherit;
@@ -193,7 +209,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: justify;
+  text-align: center;
   color: var(--c4);
 }
 .poster figcaption:hover {
@@ -488,7 +504,6 @@ button {
   height: 50px;
   width: 50px;
   margin: 1% auto 1% auto;
-  /* display: none; */
   text-align: center;
   cursor: pointer;
 }
@@ -596,13 +611,7 @@ footer {
     border-radius: 2px;
     height: 300px;
   }
-  .poster {
-    height: 250px;
-    width: 200px;
-    border-radius: 3px;
-    margin: 5px;
-    position: relative;
-  }
+ 
    #buffer {
     top: 50%;
     left: 44%;
