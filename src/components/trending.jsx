@@ -4,9 +4,9 @@ import MoviesContext from "../context/movies/context";
 export default function Trending() {
   const context = useContext(MoviesContext),
     movies = context.Trending();
-  const Download = () => {
-    console.log("download");
-  };
+  // const Download = () => {
+  //   console.log("download");
+  // };
  
   return (
     <section id="trending" className="movies-slide">
@@ -21,11 +21,11 @@ export default function Trending() {
                 <div className="poster_shadow"></div>
                 <span className="play_button">▶</span>
             
-                <div id="download-wrapper">
+                {/* <div id="download-wrapper">
                   <button id="download" onClick={Download}>
                     download
                   </button>
-                </div>
+                </div> */}
 
                 <img src={m.poster} alt="movie poster" loading="lazy" />
               <figcaption>{m.title}</figcaption>

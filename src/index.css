@@ -484,11 +484,11 @@ button {
 #close-dialog {
   background-color: rgba(46, 46, 46, 0.589);
   border-radius: 50%;
-  border: rgb(12, 1, 1) 1px solid;
-  height: 60px;
-  width: 60px;
+  border: #0c0101 1px solid;
+  height: 50px;
+  width: 50px;
   margin: 1% auto 1% auto;
-  display: none;
+  /* display: none; */
   text-align: center;
   cursor: pointer;
 }
@@ -500,7 +500,7 @@ button {
   transform: translate(-50%, -50%);
   margin: center;
   border: none;
-  display: none;
+  display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;

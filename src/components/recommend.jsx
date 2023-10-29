@@ -4,9 +4,9 @@ import MoviesContext from "../context/movies/context";
 export default function Recommend() {
   const context = useContext(MoviesContext),
     movies = context.Recommended();
-  const Download = () => {
-    console.log("download");
-  };
+  // const Download = () => {
+  //   console.log("download");
+  // };
   return (
     <section id="recommended" className="movies-slide">
       <br />
@@ -20,11 +20,11 @@ export default function Recommend() {
               <div className="poster_shadow"></div>
               <span className="play_button">▶</span>
           
-                <div id="download-wrapper">
+                {/* <div id="download-wrapper">
                   <button id="download" onClick={Download}>
                     download
                   </button>
-                </div>
+                </div> */}
 
                 <img src={m.poster} alt="movie poster" loading="lazy" />
                 <figcaption>{m.title}</figcaption>

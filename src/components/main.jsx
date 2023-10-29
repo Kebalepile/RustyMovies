@@ -1,7 +1,7 @@
 import Banner from "./banner";
 import Trending from "./trending";
 import Recommend from "./recommend";
-
+import Watch from "./watch";
 
 export default function Main() {
   return (
@@ -9,6 +9,7 @@ export default function Main() {
       <Banner />
       <Trending />
       <Recommend />
+      <Watch/>
     </main>
   );
 }
