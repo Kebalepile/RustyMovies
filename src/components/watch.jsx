@@ -18,7 +18,7 @@ export default function Watch() {
           <button id="close-dialog" onClick={closeDialog}>
             x
           </button>
-          <div style={{ width: "90%", height: "80%" }}>
+          <div style={{ width: "100%", height: "80%" }}>
             <iframe
               src={info.iframeSrc}
               width="100%"
