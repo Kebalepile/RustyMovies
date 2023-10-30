@@ -1,6 +1,12 @@
 export const data = {
   "latest": [
     {
+      "title": "muzzle",
+      "poster": "http://www.streamlord.com/thumbs/17663876.jpg",
+      "href": "http://www.streamlord.com/watch-movie-muzzle-6001.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=17663876-mv"
+    },
+    {
       "title": "five nights at freddys",
       "poster": "http://www.streamlord.com/thumbs/4589218.jpg",
       "href": "http://www.streamlord.com/watch-movie-five-nights-at-freddys-6000.html",
@@ -65,12 +71,6 @@ export const data = {
       "poster": "http://www.streamlord.com/thumbs/22640398.jpg",
       "href": "http://www.streamlord.com/watch-movie-v/h/s/85-5970.html",
       "iframeSrc": "https://streamdb.top/player/wctv.php?data=22640398-mv"
-    },
-    {
-      "title": "the list",
-      "poster": "http://www.streamlord.com/thumbs/12917050.jpg",
-      "href": "http://www.streamlord.com/watch-movie-the-list-5969.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=12917050-mv"
     }
   ],
   "featured": [

@@ -15,7 +15,6 @@
   padding: 0;
   margin: 0;
   text-align: justify;
-  
 
   --main: #252525;
   --c2: #1c242c;
@@ -36,9 +35,10 @@ body {
 
 /* banner styles */
 #welcome-banner {
-  position: absolute;
-  top: 100px;
-  left: 10%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
   height: 200px;
   width: 80dvw;
   background-image: url("./assets/img/banner_bg.jpg");
@@ -56,7 +56,6 @@ body {
   width: inherit;
   height: inherit;
   border-radius: inherit;
-  position: absolute;
   background-color: transparent;
   opacity: 0;
   transition: background-color 0.3s, opacity 0.3s;
@@ -114,6 +113,7 @@ body {
   background: linear-gradient(100deg, #2b2a2a, #1c242c, #252525, #2e3135);
   background-size: 400% 400%;
 }
+
 .movies-slide h1 {
   color: rgb(108, 231, 6);
   background-color: rgb(34, 34, 41);
@@ -133,11 +133,8 @@ body {
   border-radius: 3px;
   margin: 5px 5px 40px 5px;
   cursor: pointer;
-  position:relative;
- 
-
+  position: relative;
 }
-
 
 .poster_shadow {
   z-index: 3;
@@ -159,17 +156,11 @@ body {
 .play_button {
   font-size: 30px;
   color: transparent;
- 
   transition: color 0.3s ease, font-size 0.4s ease-in-out;
-  
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  
- 
-  
-  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .poster:hover .play_button {
   font-size: 50px;
@@ -216,7 +207,7 @@ body {
   color: var(--c6);
 }
 #trending {
-  margin-top: 300px;
+  margin-top: 120px;
 }
 
 /* Scrollbar Styles */
@@ -521,7 +512,6 @@ button {
   align-items: center;
   background-color: #252525c2;
   backdrop-filter: blur(5px);
-
   width: 100dvw;
   height: 100dvh;
 }
@@ -611,12 +601,11 @@ footer {
     border-radius: 2px;
     height: 300px;
   }
- 
-   #buffer {
+
+  #buffer {
     top: 50%;
     left: 44%;
   }
- 
 }
 @media screen and (max-width: 800px) {
   #close-dialog {
