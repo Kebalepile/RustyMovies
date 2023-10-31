@@ -120,28 +120,20 @@ func (s *Spider) movies(ctx context.Context) {
 
 // dowload poster image from http site, in order to
 //	prevent mixed content warning in prodcution.
-func (s *Spider) downloadImage(ctx context.Context, url, filename, outputPath string) error {
+func (s *Spider) downloadImage(ctx context.Context, url, filename, outputPath string) {
 	// Download the image
-	response, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer response.Body.Close()
+	res, err := http.Get(url)
+	s.error(err)
+	defer res.Body.Close()
 
 	// Create the output file
 	outputFile, err := os.Create(filepath.Join(outputPath, filename))
-	if err != nil {
-		return err
-	}
+	s.error(err)
 	defer outputFile.Close()
 
 	// Copy the response body to the output file
-	_, err = io.Copy(outputFile, response.Body)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	_, err = io.Copy(outputFile, res.Body)
+	s.error(err)
 }
 
 // retrive iframe
