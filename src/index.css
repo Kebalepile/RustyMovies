@@ -41,7 +41,7 @@ body {
   transform: translate(-50%, 50%);
   height: 200px;
   width: 80dvw;
-  background-image: url("./assets/img/banner.jpg");
+  background-image: url("/assets/img/banner.jpg");
   background-position: center;
   background-repeat: no-repeat;
   transition: filter 0.3s, box-shadow 0.3s;
