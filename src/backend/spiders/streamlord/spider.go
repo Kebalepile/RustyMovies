@@ -10,6 +10,11 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"io"
+	"net/http"
+	"os"
+	"path/filepath"
+	// "github.com/chromedp/cdproto/page"
 )
 
 type Spider struct {
@@ -104,7 +109,7 @@ func (s *Spider) movies(ctx context.Context) {
 
 		}
 	})()`)
-
+	
 	err := chromedp.Run(ctx,
 		chromedp.ScrollIntoView(`#movieslist`, chromedp.ByID),
 		chromedp.Evaluate(expression, &s.Categories))
@@ -113,14 +118,46 @@ func (s *Spider) movies(ctx context.Context) {
 	s.sleep(5)
 	s.iframes(ctx)
 }
+// dowload poster image from http site, in order to
+//  prevent mixed content warning in prodcution.
+func(s *Spider) downloadImage(ctx context.Context, url, filename, outputPath string) error {
+    // Download the image
+    response, err := http.Get(url)
+    if err != nil {
+        return err
+    }
+    defer response.Body.Close()
+
+    // Create the output file
+    outputFile, err := os.Create(filepath.Join(outputPath, filename))
+    if err != nil {
+        return err
+    }
+    defer outputFile.Close()
+
+    // Copy the response body to the output file
+    _, err = io.Copy(outputFile, response.Body)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
 
 // retrive iframe
 func (s *Spider) iframes(ctx context.Context) {
+	
+	outputPath := "database/posters"
+
 	s.log("Featured movies")
 	for i, m := range s.Categories.Featured {
 		s.log(i, ":", m.Title)
-		var origin string
 
+		filename := fmt.Sprintf(`%s.jpg`,m.Title)
+		s.downloadImage(ctx, m.Poster, filename, outputPath)
+		m.Poster = fmt.Sprintf(`assets/posters/%s`,filename)
+
+		var origin string
 		err := chromedp.Run(ctx,
 			chromedp.Navigate(m.Href),
 			chromedp.Location(&origin),
@@ -144,8 +181,12 @@ func (s *Spider) iframes(ctx context.Context) {
 	s.log("Latest movies")
 	for i, m := range s.Categories.Latest {
 		s.log(i, ":", m.Title)
-		var origin string
 
+		filename := fmt.Sprintf(`%s.jpg`,m.Title)
+		s.downloadImage(ctx, m.Poster, filename, outputPath)
+		m.Poster = fmt.Sprintf(`assets/posters/%s`,filename)
+
+		var origin string
 		err := chromedp.Run(ctx,
 			chromedp.Navigate(m.Href),
 			chromedp.Location(&origin),
