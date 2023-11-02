@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import MoviesContext from "../context/movies/context";
-import posterImg from "/assets/img/stream.jpg"
+// import posterImg from "/assets/img/stream.jpg"
 
 export default function Trending() {
   const context = useContext(MoviesContext),
@@ -28,7 +28,7 @@ export default function Trending() {
                   </button>
                 </div> */}
 
-                <img src={posterImg} alt="movie poster" loading="lazy" />
+                <img src={m.poster} alt="movie poster" loading="lazy" />
               <figcaption>{m.title}</figcaption>
               </figure>
             );
