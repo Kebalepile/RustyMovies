@@ -1,6 +1,18 @@
 export const data = {
   "latest": [
     {
+      "title": "knights of the zodiac",
+      "poster": "assets/posters/knights of the zodiac.jpg",
+      "href": "http://www.streamlord.com/watch-movie-knights-of-the-zodiac-6009.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=6528290-mv"
+    },
+    {
+      "title": "the exorcist believer",
+      "poster": "assets/posters/the exorcist believer.jpg",
+      "href": "http://www.streamlord.com/watch-movie-the-exorcist-believer-6007.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=12921446-mv"
+    },
+    {
       "title": "muzzle",
       "poster": "assets/posters/muzzle.jpg",
       "href": "http://www.streamlord.com/watch-movie-muzzle-6001.html",
@@ -59,18 +71,6 @@ export const data = {
       "poster": "assets/posters/mission impossible   dead reckoning part one.jpg",
       "href": "http://www.streamlord.com/watch-movie-mission-impossible---dead-reckoning-part-one-5972.html",
       "iframeSrc": "https://streamdb.top/player/wctv.php?data=9603212-mv"
-    },
-    {
-      "title": "blue beetle",
-      "poster": "assets/posters/blue beetle.jpg",
-      "href": "http://www.streamlord.com/watch-movie-blue-beetle-5971.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=9362930-mv"
-    },
-    {
-      "title": "v/h/s/85",
-      "poster": "assets/posters/vh_s_85.jpg",
-      "href": "http://www.streamlord.com/watch-movie-v/h/s/85-5970.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=22640398-mv"
     }
   ],
   "featured": [
