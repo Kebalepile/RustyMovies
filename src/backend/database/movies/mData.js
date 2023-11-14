@@ -1,6 +1,48 @@
 export const data = {
   "latest": [
     {
+      "title": "the killer",
+      "poster": "assets/posters/the killer.jpg",
+      "href": "http://www.streamlord.com/watch-movie-the-killer-6021.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=1136617-mv"
+    },
+    {
+      "title": "the blind",
+      "poster": "assets/posters/the blind.jpg",
+      "href": "http://www.streamlord.com/watch-movie-the-blind-6020.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=16374352-mv"
+    },
+    {
+      "title": "oppenheimer",
+      "poster": "assets/posters/oppenheimer.jpg",
+      "href": "http://www.streamlord.com/watch-movie-oppenheimer-6019.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=15398776-mv"
+    },
+    {
+      "title": "overhaul",
+      "poster": "assets/posters/overhaul.jpg",
+      "href": "http://www.streamlord.com/watch-movie-overhaul-6014.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=16427938-mv"
+    },
+    {
+      "title": "dumb money",
+      "poster": "assets/posters/dumb money.jpg",
+      "href": "http://www.streamlord.com/watch-movie-dumb-money-6013.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=13957560-mv"
+    },
+    {
+      "title": "wingwomen",
+      "poster": "assets/posters/wingwomen.jpg",
+      "href": "http://www.streamlord.com/watch-movie-wingwomen-6012.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=21638298-mv"
+    },
+    {
+      "title": "hidden strike",
+      "poster": "assets/posters/hidden strike.jpg",
+      "href": "http://www.streamlord.com/watch-movie-hidden-strike-6011.html",
+      "iframeSrc": "https://streamdb.top/player/wctv.php?data=6879446-mv"
+    },
+    {
       "title": "knights of the zodiac",
       "poster": "assets/posters/knights of the zodiac.jpg",
       "href": "http://www.streamlord.com/watch-movie-knights-of-the-zodiac-6009.html",
@@ -29,48 +71,6 @@ export const data = {
       "poster": "assets/posters/inside man.jpg",
       "href": "http://www.streamlord.com/watch-movie-inside-man-5994.html",
       "iframeSrc": "https://streamdb.top/player/wctv.php?data=18071320-mv"
-    },
-    {
-      "title": "saw x",
-      "poster": "assets/posters/saw x.jpg",
-      "href": "http://www.streamlord.com/watch-movie-saw-x-5991.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=21807222-mv"
-    },
-    {
-      "title": "nowhere",
-      "poster": "assets/posters/nowhere.jpg",
-      "href": "http://www.streamlord.com/watch-movie-nowhere-5989.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=15789472-mv"
-    },
-    {
-      "title": "last call",
-      "poster": "assets/posters/last call.jpg",
-      "href": "http://www.streamlord.com/watch-movie-last-call-5987.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=6523526-mv"
-    },
-    {
-      "title": "vindicta",
-      "poster": "assets/posters/vindicta.jpg",
-      "href": "http://www.streamlord.com/watch-movie-vindicta-5986.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=28682039-mv"
-    },
-    {
-      "title": "expend4bles",
-      "poster": "assets/posters/expend4bles.jpg",
-      "href": "http://www.streamlord.com/watch-movie-expend4bles-5977.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=3291150-mv"
-    },
-    {
-      "title": "fried barry",
-      "poster": "assets/posters/fried barry.jpg",
-      "href": "http://www.streamlord.com/watch-movie-fried-barry-5976.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=9102084-mv"
-    },
-    {
-      "title": "mission impossible   dead reckoning part one",
-      "poster": "assets/posters/mission impossible   dead reckoning part one.jpg",
-      "href": "http://www.streamlord.com/watch-movie-mission-impossible---dead-reckoning-part-one-5972.html",
-      "iframeSrc": "https://streamdb.top/player/wctv.php?data=9603212-mv"
     }
   ],
   "featured": [
